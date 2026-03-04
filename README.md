@@ -1,3 +1,3 @@
 # Philosophy
 
-A philosophy-themed project.
+Development philosophy book for nesalia inc.
