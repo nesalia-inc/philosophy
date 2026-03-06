@@ -80,63 +80,45 @@ Dependencies hidden inside. Can't test without instantiating everything.
 
 ## What It Should Be
 
-### Step 1: Extract Metadata Functions
+### Step 1: Higher-Order Metadata Functions
 
 ```typescript
-// Generate cache key for read operations
-const withCacheKey = (slug: string, method: string) =>
-  <T>(result: T, options?: Record<string, unknown>): OperationResult<T> => ({
+// Higher-order: take a metadata generator, return a wrapper function
+const withMetadata = <T>(
+  generate: (slug: string) => Record<string, unknown>
+) => (slug: string) =>
+  (result: T): OperationResult<T> => ({
     data: result,
-    meta: {
-      cacheKeys: [generateCacheKey(slug, method, options?.where)]
-    }
+    meta: generate(slug)
   })
 
-// Generate invalidate keys for write operations
-const withInvalidateKeys = (slug: string) =>
-  <T>(result: T): OperationResult<T> => ({
-    data: result,
-    meta: {
-      invalidateKeys: generateInvalidateKeys(slug)
-    }
-  })
+// Define specific generators
+const generateCacheKeys = (slug: string) => ({
+  cacheKeys: [generateCacheKey(slug)]
+})
+
+const generateInvalidateKeysForSlug = (slug: string) => ({
+  invalidateKeys: generateInvalidateKeys(slug)
+})
+
+// Create specific wrappers
+const withCache = withMetadata(generateCacheKeys)
+const withInvalidate = withMetadata(generateInvalidateKeysForSlug)
 ```
 
 ### Step 2: Compose Operations
 
 ```typescript
-// Create collection db from operations
 // apply rule: createX → X
 const collectionDb = (
   operations: CollectionOperations,
   slug: string
 ): CollectionDb => ({
-  find: (options) => pipe(
-    operations.findMany(options),
-    withCacheKey(slug, 'find')(options)
-  ),
-
-  findById: (id) => pipe(
-    operations.findUnique({ where: { id } }),
-    withCacheKey(slug, 'findById')({ id })
-  ),
-
-  create: (options) => pipe(
-    operations.create(options),
-    withInvalidateKeys(slug)
-  ),
-
-  update: (options) => pipe(
-    operations.update(options),
-    withInvalidateKeys(slug)
-  ),
-
-  delete: (options) => pipe(
-    operations.delete(options),
-    withInvalidateKeys(slug)
-  ),
-
-  // ... rest
+  find: (options) => operations.findMany(options).map(withCache(slug)),
+  findById: (id) => operations.findUnique({ where: { id } }).map(withCache(slug)),
+  create: (data) => operations.create(data).map(withInvalidate(slug)),
+  update: (data) => operations.update(data).map(withInvalidate(slug)),
+  delete: (data) => operations.delete(data).map(withInvalidate(slug)),
 })
 ```
 
