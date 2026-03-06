@@ -144,6 +144,27 @@ Done
 - `POST /api/auth/logout` - User logout
 - `GET /api/auth/me` - Get current user
 
+### Impact Analysis
+
+#### What Might This Conflict With?
+- [ ] Existing auth system
+- [ ] API rate limiting
+- [ ] Database schema
+- [ ] Other features using similar patterns
+
+#### What Depends on This?
+- [ ] Feature X (uses permissions)
+- [ ] Feature Y (checks roles)
+
+#### What Could Go Wrong?
+1. Conflicts with existing auth → How to check?
+2. Database migration needed → Is there one?
+3. Breaks existing features → Which ones to test?
+
+#### Similar Existing Features
+- Look at: `src/features/auth/service.ts`
+- Look at: `src/features/roles/service.ts`
+
 ### Acceptance Criteria
 - [ ] User can login with email/password
 - [ ] JWT token returned on login
@@ -156,6 +177,146 @@ Done
 3. Verify token in response
 4. Test protected route with token
 ```
+
+---
+
+## Why Impact Analysis Matters
+
+The brain cannot see all interactions at once. You think feature by feature, but the system is a network:
+
+```
+Feature A ───┬───► Feature B
+             │
+             └──► Feature C
+                   │
+                   └──► Feature D
+```
+
+You don't see that B, C and D exist or how they interact until you start coding.
+
+**Impact Analysis prevents**:
+- "Wait, this conflicts with existing roles system"
+- "Wait, this doesn't work with API rate limiting"
+- "Wait, I need to change the database schema"
+
+---
+
+## Impact Analysis Checklist
+
+Before approving any plan, answer these questions:
+
+### 1. What Might This Conflict With?
+
+| Question | Why It Matters |
+|----------|----------------|
+| Does it use existing X? | Don't duplicate logic |
+| Does it modify existing Y? | Could break existing features |
+| Does it use similar patterns? | Could cause confusion |
+
+### 2. What Depends on This?
+
+| Question | Why It Matters |
+|----------|----------------|
+| What features use this? | Need to update them too |
+| What will break if I change this? | Regression testing needed |
+
+### 3. What Could Go Wrong? (Pre-mortem)
+
+Ask: "If this fails, why?"
+
+| Scenario | Prevention |
+|----------|------------|
+| Conflicts with auth | Check existing auth code first |
+| Database migration needed | Plan migration upfront |
+| Breaks existing features | List features to test |
+
+### 4. Similar Existing Features
+
+| Question | Why It Matters |
+|----------|----------------|
+| Is there similar code? | Don't reinvent |
+| How did they handle X? | Follow existing patterns |
+
+---
+
+## Impact Analysis Example
+
+### Before (No Impact Analysis)
+
+```
+## Plan
+
+### What
+Add permissions system.
+
+### Files to Create
+- src/features/permissions/service.ts
+```
+
+**Result**: During implementation, discover it conflicts with roles system → rework.
+
+### After (With Impact Analysis)
+
+```
+## Plan
+
+### What
+Add permissions system.
+
+### Files to Create
+- src/features/permissions/service.ts
+
+### Impact Analysis
+
+#### What Might This Conflict With?
+- [x] Existing roles system (src/features/roles/)
+  - Solution: Permissions extend roles, not replace
+- [ ] API rate limiting
+  - No conflict expected
+
+#### What Depends on This?
+- Billing feature uses roles → needs to check permissions too
+
+#### What Could Go Wrong?
+1. Conflicts with roles → Check src/features/roles/ first
+2. Migration needed → Include migration in plan
+
+#### Similar Existing Features
+- Look at: src/features/roles/service.ts (for patterns)
+```
+
+**Result**: Before coding, you know the constraints → no rework.
+
+---
+
+## How to Use This as a Checklist
+
+For every plan, fill this out:
+
+```
+## Impact Analysis
+
+### 1. Conflicts
+What existing features might conflict?
+- [ ] Feature A: reason
+- [ ] Feature B: reason
+
+### 2. Dependencies
+What depends on this?
+- [ ] Feature X: will need update
+
+### 3. Risks
+What could go wrong?
+1. X → Prevention: Y
+2. A → Prevention: B
+
+### 4. Similar
+Existing code to reference:
+- src/features/X
+- src/features/Y
+```
+
+If you can't answer these → don't approve the plan yet.
 
 ---
 
@@ -217,6 +378,13 @@ Before approving a plan, ensure:
 - [ ] **API** defined - if applicable
 - [ ] **Criteria** testable - how to verify success
 - [ ] **Testing** documented - how to verify it works
+
+### Impact Analysis Checklist
+
+- [ ] **Conflicts** identified - what might conflict?
+- [ ] **Dependencies** mapped - what depends on this?
+- [ ] **Risks** listed - what could go wrong?
+- [ ] **Similar** code referenced - existing code to look at
 
 ---
 
@@ -286,6 +454,24 @@ Add JWT-based user authentication with login/logout.
 - POST /api/auth/login - {email, password} → {token, user}
 - POST /api/auth/logout - clears token
 - GET /api/auth/me - returns current user
+
+### Impact Analysis
+
+#### What Might This Conflict With?
+- [x] Existing sessions (src/lib/sessions.ts)
+  - Solution: Use JWT, keep sessions for non-API
+- [ ] Database schema - Users table exists, no conflict
+
+#### What Depends on This?
+- [ ] Dashboard (checks user login) - will use new auth
+- [ ] API routes (already use JWT) - no changes needed
+
+#### What Could Go Wrong?
+1. Conflicts with session system → Solution: JWT only for API
+2. Token expiry issues → Solution: 1 hour expiry
+
+#### Similar Existing Features
+- Look at: src/lib/auth.ts (existing auth logic to reuse)
 
 ### Acceptance Criteria
 - [ ] Login with valid credentials returns token
