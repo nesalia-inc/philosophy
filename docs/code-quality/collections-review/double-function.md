@@ -61,7 +61,12 @@ type FieldTypeConfig = {
 // fieldType returns a function that takes args and returns Field
 const fieldType = (config: FieldTypeConfig) =>
   (args: z.ZodType): Result<Field, ValidationError> => {
-    const validatedArgs = config.args.parse(args)
+    // Use Try monad - zod.parse throws on error
+    return Try.of(() => config.args.parse(args))
+      .map(() => ({
+        schema: config.schema,
+        database: config.database
+      }))
     return Result.ok({
       schema: config.schema,
       database: config.database
