@@ -60,7 +60,7 @@ type FieldTypeConfig = {
 
 // fieldType returns a function that takes args and returns Field
 const fieldType = (config: FieldTypeConfig) =>
-  (args: unknown): Result<Field, ValidationError> => {
+  (args: z.ZodType): Result<Field, ValidationError> => {
     const validatedArgs = config.args.parse(args)
     return Result.ok({
       schema: config.schema,
