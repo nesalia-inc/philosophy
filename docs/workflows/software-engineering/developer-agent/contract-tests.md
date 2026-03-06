@@ -2,6 +2,8 @@
 
 Interface validation tests written before implementation.
 
+**Note**: All code is functional - no classes, no services. Use pure functions with `Result` type for error handling.
+
 ---
 
 ## Purpose
@@ -45,29 +47,27 @@ Contract tests define **what the code must do** before it's written. They valida
 ### What to Include
 
 ```typescript
-// tests/contract/user.service.test.ts
+// tests/contract/create-user.test.ts
 
-describe('UserService', () => {
-  // Interface validation
-  describe('createUser', () => {
-    it('should accept email and name, return User', () => {
-      // Validates: (email, name) → User
-    })
-
-    it('should throw ValidationError for invalid email', () => {
-      // Validates error types
-    })
-
-    it('should throw DuplicateError if email exists', () => {
-      // Validates error types
-    })
+// Pure function: (email, name) → Result<User, ValidationError | DuplicateError>
+describe('createUser', () => {
+  it('should accept email and name, return Ok(User)', () => {
+    // Validates: (email, name) → Result<User, E>
   })
 
-  // Return type validation
-  describe('User shape', () => {
-    it('should return user with id, email, name, createdAt', () => {
-      // Validates return object structure
-    })
+  it('should return Err(ValidationError) for invalid email', () => {
+    // Validates error case
+  })
+
+  it('should return Err(DuplicateError) if email exists', () => {
+    // Validates error case
+  })
+})
+
+// Return type validation
+describe('User', () => {
+  it('should have id, email, name, createdAt', () => {
+    // Validates return object structure
   })
 })
 ```
@@ -78,8 +78,9 @@ describe('UserService', () => {
 // WRONG - Implementation details in contract tests
 describe('createUser', () => {
   it('should save to database', () => { ... })     // HOW, not WHAT
-  it('should hash password with bcrypt', () => { ... })
+  it('should hash password', () => { ... })
   it('should use transactions', () => { ... })
+  it('should call userRepository.save()', () => { ... })
 })
 ```
 
@@ -163,42 +164,46 @@ jobs:
 ### 1. Plan Defines Interface
 
 ```markdown
-## createUser(email: string, name: string): User
+## createUser(email: string, name: string): Result<User, ValidationError | DuplicateError>
 
 Returns:
-- id: string (UUID)
-- email: string
-- name: string
-- createdAt: Date
-
-Throws:
-- ValidationError if email invalid
-- DuplicateError if email exists
+- Ok({ id: string, email: string, name: string, createdAt: Date })
+- Err(ValidationError) if email invalid
+- Err(DuplicateError) if email exists
 ```
 
 ### 2. Agent Writes Contract Tests
 
 ```typescript
+import { Result, Ok, Err } from '@pereira/result'
+
+// Pure function: no classes, no services
 describe('createUser', () => {
-  it('should create user and return User object', () => {
-    const user = createUser('test@test.com', 'John')
+  it('should return Ok(User) with correct shape', () => {
+    const result = createUser('test@test.com', 'John')
 
-    expect(user).toMatchObject({
-      id: expect.any(String),
-      email: 'test@test.com',
-      name: 'John',
-      createdAt: expect.any(Date)
-    })
+    expect(result).toBeInstanceOf(Ok)
+    const user = (result as Ok<User>).value
+    expect(user.id).toBeDefined()
+    expect(user.email).toBe('test@test.com')
+    expect(user.name).toBe('John')
+    expect(user.createdAt).toBeInstanceOf(Date)
   })
 
-  it('should throw ValidationError for invalid email', () => {
-    expect(() => createUser('invalid', 'John'))
-      .toThrow(ValidationError)
+  it('should return Err(ValidationError) for invalid email', () => {
+    const result = createUser('invalid', 'John')
+
+    expect(result).toBeInstanceOf(Err)
+    const error = (result as Err<ValidationError>).error
+    expect(error.code).toBe('INVALID_EMAIL')
   })
 
-  it('should throw DuplicateError for existing email', () => {
-    expect(() => createUser('existing@test.com', 'John'))
-      .toThrow(DuplicateError)
+  it('should return Err(DuplicateError) for existing email', () => {
+    const result = createUser('existing@test.com', 'John')
+
+    expect(result).toBeInstanceOf(Err)
+    const error = (result as Err<DuplicateError>).error
+    expect(error.code).toBe('DUPLICATE_EMAIL')
   })
 })
 ```
@@ -208,10 +213,12 @@ describe('createUser', () => {
 Human checks:
 - Are business requirements met?
 - Are error cases correct?
+- Is Result type appropriate?
 
 Agent (reviewer) checks:
 - Are tests technically correct?
 - Is coverage complete?
+- No implementation details?
 
 ### 4. Approved → Immutable
 
@@ -224,7 +231,8 @@ Can only be changed via new review cycle
 ### 5. Development Agent Implements
 
 ```typescript
-async function createUser(email: string, name: string): Promise<User> {
+// Pure function - no class, no service
+function createUser(email: string, name: string): Result<User, ValidationError | DuplicateError> {
   // Implementation
   // Must pass contract tests
 }

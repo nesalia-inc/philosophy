@@ -70,22 +70,27 @@ Contract tests define WHAT the code must do, not HOW. They validate the interfac
 ### Example: Contract Test
 
 ```typescript
-// Contract test - interface validation
+// Pure function: no classes, no services
+// Use Result type for error handling
+
 describe('createUser', () => {
-  // Validates: (email, name) → User
-  it('should accept email and name, return User', () => {
-    const user = createUser('test@test.com', 'John')
-    expect(user).toMatchObject({
-      id: expect.any(String),
-      email: 'test@test.com',
-      name: 'John'
-    })
+  // Validates: (email, name) → Result<User, E>
+  it('should return Ok(User) with correct shape', () => {
+    const result = createUser('test@test.com', 'John')
+
+    expect(result).toBeInstanceOf(Ok)
+    const user = (result as Ok<User>).value
+    expect(user.id).toBeDefined()
+    expect(user.email).toBe('test@test.com')
   })
 
-  // Validates error types
-  it('should throw ValidationError for invalid email', () => {
-    expect(() => createUser('invalid', 'John'))
-      .toThrow(ValidationError)
+  // Validates error case with Result
+  it('should return Err(ValidationError) for invalid email', () => {
+    const result = createUser('invalid', 'John')
+
+    expect(result).toBeInstanceOf(Err)
+    const error = (result as Err<ValidationError>).error
+    expect(error.code).toBe('INVALID_EMAIL')
   })
 })
 ```
