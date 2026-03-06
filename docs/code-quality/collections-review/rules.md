@@ -229,6 +229,9 @@ If a function returns `X`, name it `X`, not `createX`.
 | 17 | Each suffix costs mental effort to assemble |
 | 18 | Module needs purpose, entry point, and data flow documented |
 | 19 | One module = one responsibility, split otherwise |
+| 20 | Lookup tables over if/else chains |
+| 21 | Constants over magic strings |
+| 22 | DRY: factorize repeated patterns |
 
 ---
 
