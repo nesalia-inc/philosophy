@@ -114,19 +114,15 @@ Every code example should work when copied:
 "You need to set up the database connection."
 
 ✅ GOOD:
-```typescript
 const db = database({
   connectionString: process.env.DATABASE_URL
 })
 ```
-```
 
 ### 4. Maintainable > Perfect
 
-```
-Doc perfect but outdated = dangerous
-Doc imperfect but current = usable
-```
+> Doc perfect but outdated = dangerous
+> Doc imperfect but current = usable
 
 ### 5. Honest About Limitations
 
@@ -160,7 +156,7 @@ docs/
 └── troubleshooting.md     # Solve problems
 ```
 
-### For Agents
+### For Agents (Project-Level)
 
 ```
 .ai/
@@ -170,6 +166,17 @@ docs/
 │   ├── bug-fix.md
 │   └── review.md
 └── context.md             # Project overview
+```
+
+### For Agents (Central Catalog)
+
+```
+docs/
+├── index.md               # List of all packages
+└── packages/              # Agent documentation per package
+    ├── auth.md
+    ├── database.md
+    └── ui.md
 ```
 
 ---
