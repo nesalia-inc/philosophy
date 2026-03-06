@@ -225,6 +225,8 @@ If a function returns `X`, name it `X`, not `createX`.
 | 13 | `createX` → `X` if returns X |
 | 14 | Higher-order functions over duplicated patterns |
 | 15 | Full names: `accumulator`, not `acc` |
+| 16 | No suffixes: `Options`, `Service`, `Controller` — just name it |
+| 17 | Each suffix costs mental effort to assemble |
 
 ---
 
