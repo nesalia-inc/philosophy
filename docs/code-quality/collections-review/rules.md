@@ -223,6 +223,8 @@ If a function returns `X`, name it `X`, not `createX`.
 | 11 | Composition |
 | 12 | No silent failures |
 | 13 | `createX` → `X` if returns X |
+| 14 | Higher-order functions over duplicated patterns |
+| 15 | Full names: `accumulator`, not `acc` |
 
 ---
 
