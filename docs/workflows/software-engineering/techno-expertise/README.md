@@ -114,12 +114,11 @@ const paymentIntent = await stripe.paymentIntents.create({
 
 ## Common Errors Solution
 
-| Error | |
+| Error | Solution |
 |-------|----------|
 | Invalid API key | Check environment variable |
 | Webhook signature invalid | Verify secret matches |
 | Rate limited | Implement exponential backoff |
-```
 
 ---
 
