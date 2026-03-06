@@ -32,7 +32,7 @@ This doesn't support options at all. The config is static.
 
 ---
 
-## Valid Pattern: Options as Parameters
+## Valid Pattern: FieldType with Args
 
 ```typescript
 // Specific database type, not unknown
@@ -45,36 +45,45 @@ type DatabaseField =
   | { type: 'array'; itemType: string }
   | { type: 'jsonb' }
 
+// Field = what you get after calling text(args)
 type Field = {
-  schema: z.ZodType
+  schema: z.ZodType      // for validating data in operations
+  database: DatabaseField // DB representation
+}
+
+// FieldTypeConfig = what you pass to fieldType()
+type FieldTypeConfig = {
+  args: z.ZodType        // schema to validate args when calling text(...)
+  schema: z.ZodType      // schema for validating data in operations
   database: DatabaseField
 }
 
-type FieldOptions = {
-  min?: number
-  max?: number
-  required?: boolean
-}
-
-const text = (options?: FieldOptions): Field => {
-  let schema = z.string()
-
-  if (options?.min) schema = schema.min(options.min)
-  if (options?.max) schema = schema.max(options.max)
-
-  return {
-    schema,
-    database: { type: 'text' }
+// fieldType returns a function that takes args and returns Field
+const fieldType = (config: FieldTypeConfig) =>
+  (args: unknown): Result<Field, ValidationError> => {
+    const validatedArgs = config.args.parse(args)
+    return Result.ok({
+      schema: config.schema,
+      database: config.database
+    })
   }
-}
 
 // Usage
-text()                    // { schema: z.string(), database: { type: 'text' } }
-text({ min: 4 })          // { schema: z.string().min(4), database: { type: 'text' } }
-text({ min: 4, max: 20 }) // { schema: z.string().min(4).max(20), database: { type: 'text' } }
+const text = fieldType({
+  args: z.object({ min: z.number(), max: z.number() }).optional(),
+  schema: z.string(),
+  database: { type: 'text' }
+})
+
+text()                        // → { schema: z.string(), database: { type: 'text' } }
+text({ min: 4 })             // → { schema: z.string(), database: { type: 'text' } }
+text({ min: 4, max: 20 })    // → { schema: z.string(), database: { type: 'text' } }
 ```
 
-This works perfectly. No double function needed.
+This pattern:
+- `args` validates what you pass when calling `text(...)`
+- `schema` validates data in database operations
+- Returns a function that takes args and returns `Result<Field, Error>`
 
 ---
 
