@@ -227,6 +227,8 @@ If a function returns `X`, name it `X`, not `createX`.
 | 15 | Full names: `accumulator`, not `acc` |
 | 16 | No suffixes: `Options`, `Service`, `Controller` — just name it |
 | 17 | Each suffix costs mental effort to assemble |
+| 18 | Module needs purpose, entry point, and data flow documented |
+| 19 | One module = one responsibility, split otherwise |
 
 ---
 
