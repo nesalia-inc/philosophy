@@ -18,8 +18,11 @@ Complete workflow system for Nesalia Inc - managing 25+ repositories with AI age
 7. [Release Process](./release-process.md)
 8. [Documentation Standards](./documentation.md)
 9. [AI Agent Integration](./ai-agents.md)
-10. [Techno Expertise](./techno-expertise/)
-11. [Repository Templates](./templates/)
+10. [Developer Agent](./developer-agent/)
+    - [System Prompt](./developer-agent/system-prompt.md)
+    - [Metrics](./developer-agent/metrics.md)
+11. [Techno Expertise](./techno-expertise/)
+12. [Repository Templates](./templates/)
 
 ---
 

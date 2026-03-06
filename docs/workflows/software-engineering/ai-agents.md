@@ -4,6 +4,15 @@ How to effectively work with AI agents across multiple repositories.
 
 ---
 
+## Developer Agent
+
+The primary execution agent in our workflow. See [Developer Agent](./developer-agent/README.md) for:
+- Role definition (order preparer)
+- System prompt for execution
+- Performance metrics
+
+---
+
 ## The Model
 
 ```
