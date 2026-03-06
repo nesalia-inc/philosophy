@@ -146,22 +146,43 @@ const connect = (
   }
 }
 
-// 2. Schema building only
-const buildSchema = (
-  collections: Collection[]
-): Schema =>
-  collections.reduce((acc, coll) => {
-    acc[coll.slug] = coll.fields
-    return acc
-  }, {})
+// 2. Convert fields to Drizzle tables
+const toDrizzleTable = (
+  fields: CollectionFields
+): DrizzleTable =>
+  // Maps user field definitions to Drizzle table
+  {}
 
-// 3. Collection operations registration
-const registerCollection = (
-  db: Database,
-  schema: Schema,
-  collection: Collection
+const buildDrizzleTables = (
+  collections: Collection[]
+): DrizzleTable[] =>
+  collections.map(coll => toDrizzleTable(coll.fields))
+
+// 3. Build runtime schema (fields + drizzle tables + operators)
+const buildRuntimeSchema = (
+  collections: Collection[],
+  drizzleTables: DrizzleTable[]
+): RuntimeSchema => {
+  const tables: RuntimeSchema['tables'] = {}
+
+  for (const [i, coll] of collections.entries()) {
+    tables[coll.slug] = {
+      fields: coll.fields,
+      table: drizzleTables[i],
+      operators: buildOperators(coll.fields)
+    }
+  }
+
+  return { tables }
+}
+
+// 4. Create operations (CRUD functions) for a collection
+const createCollectionOperationsForTable = (
+  connection: Database,
+  runtimeTable: RuntimeTable
 ): CollectionOperations =>
-  createCollectionOperations(collection, db, schema)
+  // Returns { find, create, update, delete, ... }
+  {}
 
 // 4. Plugin processing
 const applyPlugins = (
@@ -207,12 +228,10 @@ const defineConfig = <T extends Collection[]>(
     // Step 1: Connect to DB (raw connection)
     connect(options.database),
 
-    // Step 2: Build drizzle tables from collections
+    // Step 2: Convert fields to Drizzle tables
     (connection) => ({
       connection,
-      drizzleTables: options.collections.map(coll =>
-        compileToDrizzle(coll.fields)
-      )
+      drizzleTables: buildDrizzleTables(options.collections)
     }),
 
     // Step 3: Apply plugins (adds more collections)
@@ -222,37 +241,37 @@ const defineConfig = <T extends Collection[]>(
       drizzleTables
     }),
 
-    // Step 4: Build compiled schema (tables + operators)
+    // Step 4: Build runtime schema (fields + tables + operators)
     ({ connection, allCollections, drizzleTables }) => ({
       connection,
-      compiled: compileSchema(allCollections, drizzleTables)
+      runtime: buildRuntimeSchema(allCollections, drizzleTables)
     }),
 
-    // Step 5: Register operations
-    ({ connection, compiled }) => ({
-      operations: compiled.tables.map(t =>
-        registerCollection(connection, t)
+    // Step 5: Create CRUD operations for each table
+    ({ connection, runtime }) => ({
+      operations: runtime.tables.map(t =>
+        createCollectionOperationsForTable(connection, t)
       )
     }),
 
     // Step 6: Build final object
-    ({ operations, compiled }) => ({
-      collections: toMetadata(compiled.tables),
+    ({ operations, runtime }) => ({
+      collections: toMetadata(runtime.tables),
       db: buildDbObject(operations),
-      $meta: buildMeta(compiled.tables)
+      $meta: buildMeta(runtime.tables)
     })
   )
 ```
 
 ### Key Concepts Explained
 
-| Concept | Represents | Used For |
+| Concept | Represents | Function |
 |---------|-----------|----------|
-| `connection` | Raw DB pool (Pool, better-sqlite3) | Low-level queries |
-| `drizzleTables` | Drizzle table definitions | Query builder |
-| `compiled` | Tables + operators + fields | Running queries |
-| `operations` | CRUD functions | Exposed API |
-| `metadata` | Slug, name, fields | Documentation/introspection |
+| `connection` | Raw DB pool (Pool, better-sqlite3) | `connect()` |
+| `drizzleTables` | Drizzle table definitions | `buildDrizzleTables()` |
+| `runtime` | Tables + operators + fields ready to use | `buildRuntimeSchema()` |
+| `operations` | CRUD functions for each table | `createCollectionOperationsForTable()` |
+| `metadata` | Slug, name, fields for docs | `toMetadata()` |
 
 ### Step 3: Types That Mean Something
 
