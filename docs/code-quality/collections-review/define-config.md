@@ -108,6 +108,29 @@ The caller has no idea what `any` is.
 
 ### Step 1: Separate Each Responsibility
 
+First, define clear types for each concept:
+
+```typescript
+// 1. Collection Fields = what user defines
+type CollectionFields = {
+  [key: string]: FieldDefinition
+}
+
+// 2. Drizzle Table = DB representation
+type DrizzleTable = PgTable | MySqlTable | SqliteTable
+
+// 3. Compiled = tables + operators ready for queries
+type CompiledSchema = {
+  tables: {
+    [slug: string]: {
+      fields: CollectionFields
+      table: DrizzleTable
+      operators: OperatorMap
+    }
+  }
+}
+```
+
 ```typescript
 // 1. Database connection only
 const connect = (
@@ -181,37 +204,55 @@ const defineConfig = <T extends Collection[]>(
   options: ConfigOptions<T>
 ): DefineConfigReturn<T> =>
   pipe(
-    // Step 1: Connect to DB
+    // Step 1: Connect to DB (raw connection)
     connect(options.database),
 
-    // Step 2: Build schema
-    (db) => ({
-      db,
-      schema: buildSchema(options.collections)
+    // Step 2: Build drizzle tables from collections
+    (connection) => ({
+      connection,
+      drizzleTables: options.collections.map(coll =>
+        compileToDrizzle(coll.fields)
+      )
     }),
 
-    // Step 3: Apply plugins
-    ({ db, schema }) => ({
-      db,
-      schema,
-      collections: applyPlugins(options.collections, options.plugins ?? [])
+    // Step 3: Apply plugins (adds more collections)
+    ({ connection, drizzleTables }) => ({
+      connection,
+      allCollections: applyPlugins(options.collections, options.plugins ?? []),
+      drizzleTables
     }),
 
-    // Step 4: Build operations
-    ({ db, schema, collections }) => ({
-      db,
-      schema,
-      operations: collections.map(c => registerCollection(db, schema, c))
+    // Step 4: Build compiled schema (tables + operators)
+    ({ connection, allCollections, drizzleTables }) => ({
+      connection,
+      compiled: compileSchema(allCollections, drizzleTables)
     }),
 
-    // Step 5: Build final object
-    ({ db, schema, operations, collections }) => ({
-      collections: toMetadata(collections),
+    // Step 5: Register operations
+    ({ connection, compiled }) => ({
+      operations: compiled.tables.map(t =>
+        registerCollection(connection, t)
+      )
+    }),
+
+    // Step 6: Build final object
+    ({ operations, compiled }) => ({
+      collections: toMetadata(compiled.tables),
       db: buildDbObject(operations),
-      $meta: buildMeta(collections, options.plugins)
+      $meta: buildMeta(compiled.tables)
     })
   )
 ```
+
+### Key Concepts Explained
+
+| Concept | Represents | Used For |
+|---------|-----------|----------|
+| `connection` | Raw DB pool (Pool, better-sqlite3) | Low-level queries |
+| `drizzleTables` | Drizzle table definitions | Query builder |
+| `compiled` | Tables + operators + fields | Running queries |
+| `operations` | CRUD functions | Exposed API |
+| `metadata` | Slug, name, fields | Documentation/introspection |
 
 ### Step 3: Types That Mean Something
 
