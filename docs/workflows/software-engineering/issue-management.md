@@ -2,6 +2,8 @@
 
 How to create, structure, and manage issues for effective development.
 
+> See also: [Label Management](./label-management.md) for priority, effort, and status labels.
+
 ---
 
 ## Why Issue Structure Matters
@@ -270,36 +272,21 @@ assignees: ''
 
 ---
 
-## Issue Labels
+## Labels
 
-### Category Labels
+For complete label management, priority, and effort tracking, see [Label Management](./label-management.md).
 
-| Label | Use For |
-|-------|---------|
-| `bug` | Something is broken |
-| `enhancement` | New feature or improvement |
-| `task` | General work item |
-| `documentation` | Docs-related work |
-| `refactoring` | Code cleanup |
-| `security` | Security-related |
+Quick reference:
 
-### Priority Labels
-
-| Label | Meaning |
-|-------|---------|
-| `critical` | Blocked production, must fix now |
-| `high` | Important, release blocker |
-| `medium` | Should be fixed |
-| `low` | Nice to have |
-
-### Status Labels
-
-| Label | Meaning |
-|-------|---------|
-| `blocked` | Waiting on something else |
-| `in-progress` | Being worked on |
-| `review` | Ready for review |
-| `needs-info` | More information needed |
+| Type | Status | Priority | Effort |
+|------|--------|----------|--------|
+| `bug` | `triage` | `priority:critical` | `effort:xs` |
+| `feature` | `ready` | `priority:high` | `effort:s` |
+| `enhancement` | `in-progress` | `priority:medium` | `effort:m` |
+| `task` | `blocked` | `priority:low` | `effort:l` |
+| `refactor` | `review` | | `effort:xl` |
+| `docs` | `done` | | |
+| `security` | | | |
 
 ---
 
