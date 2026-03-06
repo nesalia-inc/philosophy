@@ -129,6 +129,122 @@ Done
 
 ---
 
+## Plan Levels
+
+Don't use the full checklist for every issue. Use the right level:
+
+| Level | When | Time to create |
+|-------|------|----------------|
+| **Quick Fix** | < 1 hour work | 2 min |
+| **Standard** | 1-3 days work | 5-10 min |
+| **Complex** | > 1 week | 15-30 min |
+
+---
+
+## Level 1: Quick Fix (< 1 hour)
+
+For small fixes, typos, quick improvements.
+
+```markdown
+## Plan
+
+### What
+[One sentence - what to fix]
+
+### Solution
+[How to fix it in one sentence]
+
+### Files
+- `src/file.ts`
+
+### Test
+How to verify it works.
+```
+
+**Use for**:
+- Bug fixes < 1 hour
+- Small typos
+- Quick config changes
+
+---
+
+## Level 2: Standard (1-3 days)
+
+For normal features and moderate work.
+
+```markdown
+## Plan
+
+### What
+[One sentence describing what to build]
+
+### Files
+**Create:**
+- `src/features/auth/types.ts`
+- `src/features/auth/service.ts`
+
+**Modify:**
+- `src/index.ts`
+
+### Dependencies
+- Internal: `@nesalia/pkg`
+- External: `package-x`
+
+### API
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+
+### Security
+- [ ] Input validation
+- [ ] Password hashing
+
+### Tests
+- [ ] Unit tests
+- [ ] Integration tests
+
+### Impact
+- [ ] Conflicts with X
+
+### Acceptance Criteria
+- [ ] Login works
+- [ ] Logout works
+
+### How to Test
+1. Run dev
+2. Test login
+```
+
+**Use for**:
+- New features
+- Medium bug fixes
+- Small refactors
+
+---
+
+## Level 3: Complex (> 1 week)
+
+For large features, big refactors, anything requiring multiple people.
+
+Full checklist from section below.
+
+**Use for**:
+- Large features (> 1 week)
+- Architecture changes
+- Security features
+- Multi-team work
+
+---
+
+## Quick Reference
+
+| Level | Time | Use For |
+|-------|------|---------|
+| Quick Fix | 2 min | < 1 hour |
+| Standard | 5-10 min | 1-3 days |
+| Complex | 15-30 min | > 1 week |
+
+---
+
 ## Complete Plan Template
 
 Use this template for every plan. Check every box.
@@ -517,18 +633,32 @@ Use a project board:
 
 ## When to Use Plans
 
-### Always Use Plans For
+Use the appropriate level:
+
+| Work Type | Level | Example |
+|-----------|-------|---------|
+| < 1 hour | Quick Fix | Typo, quick fix |
+| 1-3 days | Standard | Normal feature |
+| > 1 week | Complex | Large feature |
+
+### Quick Fix (< 1 hour)
+
+- Small bug fixes
+- Documentation typos
+- Quick config changes
+
+### Standard (1-3 days)
 
 - New features
-- Large refactors
+- Medium bug fixes
 - API changes
-- Anything requiring 1+ day of work
 
-### Can Skip For
+### Complex (> 1 week)
 
-- Quick fixes (< 1 hour)
-- Documentation updates
-- Small bug fixes
+- Large features
+- Architecture changes
+- Security features
+- Refactors affecting multiple files
 
 ---
 
