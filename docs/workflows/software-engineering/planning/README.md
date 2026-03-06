@@ -26,6 +26,19 @@ Every feature requires 2-4x rework because the agent doesn't know exactly what's
 
 ---
 
+## The Problem: Forgetting Details
+
+Even with the best intentions, during development you forget:
+
+- "Wait, forgot database indexes"
+- "Wait, forgot security checks"
+- "Wait, forgot to update tests"
+- "Wait, forgot documentation"
+
+The solution: **A checklist that forces you to think about everything**.
+
+---
+
 ## The Solution
 
 Store the plan in the issue itself:
@@ -116,64 +129,215 @@ Done
 
 ---
 
-## Plan Format
+## Complete Plan Template
 
-### Template
+Use this template for every plan. Check every box.
 
 ```markdown
-## Plan
+## Plan: [Feature Name]
 
-### What
+### 1. What
 [One sentence describing what to build]
 
-### Files to Create
-- `src/features/auth/types.ts`    - User, AuthResult types
+### 2. Files
+**Create:**
+- `src/features/auth/types.ts` - User, AuthResult types
 - `src/features/auth/service.ts` - authenticate(), createToken()
 - `tests/features/auth.test.ts`
 
-### Files to Modify
+**Modify:**
 - `src/index.ts` - Export new module
 - `src/db/schema.ts` - Add users table
 
-### Dependencies
-- `@nesalia/crypto` - Password hashing
-- `@nesalia/jwt` - Token generation
+### 3. Dependencies
+- Internal: `@nesalia/crypto` - Password hashing
+- External: `package-x` - Description
 
-### API Changes
+### 4. API Changes
 - `POST /api/auth/login` - User login
 - `POST /api/auth/logout` - User logout
 - `GET /api/auth/me` - Get current user
 
-### Impact Analysis
+---
+
+### 5. Database
+- [ ] Migration needed?
+- [ ] New table? Columns?
+- [ ] Indexes needed?
+- [ ] Query performance considered?
+- [ ] Foreign keys?
+
+### 6. Security
+- [ ] Input validation
+- [ ] Authentication required?
+- [ ] Authorization/permissions?
+- [ ] No secrets in code?
+- [ ] SQL injection prevention?
+- [ ] XSS prevention?
+
+### 7. Error Handling
+- [ ] Error types defined?
+- [ ] Error messages user-friendly?
+- [ ] Logging for debugging?
+- [ ] 404, 401, 500 handled?
+
+### 8. Testing
+- [ ] Unit tests: file.test.ts
+- [ ] Integration tests: file.integration.test.ts
+- [ ] E2E tests needed?
+- [ ] Test existing affected code?
+
+### 9. Documentation
+- [ ] README updated?
+- [ ] API docs updated?
+- [ ] Migration guide needed?
+- [ ] Environment variables documented?
+
+### 10. Configuration
+- [ ] New env vars?
+- [ ] Default values?
+- [ ] Validation?
+
+### 11. Breaking Changes
+- [ ] API change?
+- [ ] Database migration?
+- [ ] Config change?
+- [ ] Migration path?
+
+### 12. Performance
+- [ ] N+1 queries?
+- [ ] Indexes added?
+- [ ] Caching strategy?
+- [ ] Pagination?
+
+### 13. Monitoring
+- [ ] Logging added?
+- [ ] Metrics?
+- [ ] Alerts for failures?
+
+---
+
+### 14. Impact Analysis
 
 #### What Might This Conflict With?
-- [ ] Existing auth system
-- [ ] API rate limiting
-- [ ] Database schema
-- [ ] Other features using similar patterns
+- [ ] Existing system X - reason
+- [ ] Feature Y - reason
 
 #### What Depends on This?
-- [ ] Feature X (uses permissions)
-- [ ] Feature Y (checks roles)
+- [ ] Feature Z - will need update
 
 #### What Could Go Wrong?
-1. Conflicts with existing auth → How to check?
-2. Database migration needed → Is there one?
-3. Breaks existing features → Which ones to test?
+1. Issue → Prevention
+2. Problem → Solution
 
 #### Similar Existing Features
 - Look at: `src/features/auth/service.ts`
-- Look at: `src/features/roles/service.ts`
 
-### Acceptance Criteria
-- [ ] User can login with email/password
-- [ ] JWT token returned on login
-- [ ] Protected routes require valid token
-- [ ] Invalid credentials return error
+---
 
-### How to Test
+### 15. Acceptance Criteria
+- [ ] Criterion 1 - testable
+- [ ] Criterion 2 - testable
+
+### 16. How to Test
 1. Run `npm run dev`
-2. POST /api/auth/login with {email, password}
+2. POST /api/auth/login
+3. Verify response
+```
+
+---
+
+## Checklist Categories Explained
+
+### 5. Database
+**Why**: Forgot indexes = slow queries. Forgot migrations = broken deploys.
+
+| Check | Meaning |
+|-------|---------|
+| Migration needed? | Does this need a DB migration? |
+| New table? | Adding new table? |
+| Indexes needed? | Will queries be slow without indexes? |
+| Query performance | Any N+1 or heavy queries? |
+
+### 6. Security
+**Why**: Security is not optional.
+
+| Check | Meaning |
+|-------|---------|
+| Input validation | Validate all user input |
+| Authentication | Who can access? |
+| Authorization | What can they do? |
+| No secrets | No API keys in code |
+| SQL injection | Use parameterized queries |
+| XSS | Escape output |
+
+### 7. Error Handling
+**Why**: Users see errors. Logs help debugging.
+
+| Check | Meaning |
+|-------|---------|
+| Error types | Use Result<T, E> |
+| User-friendly | Don't show stack traces |
+| Logging | For debugging |
+| HTTP codes | 404, 401, 500 handled |
+
+### 8. Testing
+**Why**: Tests catch regressions.
+
+| Check | Meaning |
+|-------|---------|
+| Unit tests | Test logic in isolation |
+| Integration | Test with DB |
+| E2E | Test user flows |
+| Affected code | Test things that might break |
+
+### 9. Documentation
+**Why**: Others need to use and maintain this.
+
+| Check | Meaning |
+|-------|---------|
+| README | Basic usage |
+| API docs | Endpoint documentation |
+| Migration | How to migrate if breaking |
+| Env vars | Configuration |
+
+### 10. Configuration
+**Why**: Config should not be hardcoded.
+
+| Check | Meaning |
+|-------|---------|
+| Env vars | Use environment variables |
+| Defaults | Sensible defaults |
+| Validation | Validate config |
+
+### 11. Breaking Changes
+**Why**: Breaking changes need migration paths.
+
+| Check | Meaning |
+|-------|---------|
+| API change | Different response format? |
+| Database | Schema change? |
+| Config | Different config format? |
+| Migration | How to migrate? |
+
+### 12. Performance
+**Why**: Slow features = bad UX.
+
+| Check | Meaning |
+|-------|---------|
+| N+1 | Avoid N+1 queries |
+| Indexes | Add where needed |
+| Caching | Cache expensive ops |
+| Pagination | Don't load all data |
+
+### 13. Monitoring
+**Why**: Know when things break.
+
+| Check | Meaning |
+|-------|---------|
+| Logging | Log important events |
+| Metrics | Track usage |
+| Alerts | Get notified on failure |
 3. Verify token in response
 4. Test protected route with token
 ```
