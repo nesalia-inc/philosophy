@@ -38,6 +38,7 @@ Each task provides:
 |-------|--------|---------|
 | Issue | Issues Management | What to build |
 | Plan | Planning | How to build it |
+| Contract Tests | Agent writes → Review approved | Interface validation |
 | Knowledge | Techno Expertise | How to do it right |
 
 ---
@@ -61,6 +62,14 @@ See [System Prompt](./system-prompt.md) for detailed instructions.
 
 ---
 
+## Contract Tests
+
+Before implementing, agent writes contract tests that define the interface:
+
+See [Contract Tests](./contract-tests.md) for the complete process.
+
+---
+
 ## Performance Metrics
 
 Track agent effectiveness:
@@ -78,27 +87,38 @@ See [Metrics](./metrics.md) for what to measure.
 2. Read relevant knowledge (Techno Courses)
        │
        ▼
-3. Create feature branch
+3. Write contract tests (interface validation)
        │
        ▼
-4. Implement solution
+4. Review (Human + Agent)
        │
-       ├── Write code
-       ├── Add tests
+       ▼
+5. Contract tests approved → IMMUTABLE
+       │
+       ▼
+6. Create feature branch
+       │
+       ▼
+7. Implement solution
+       │
+       ├── Write code to pass contract tests
+       ├── Add implementation tests
        └── Update docs (if needed)
        │
        ▼
-5. Commit with clear messages
+8. Commit with clear messages
        │
        ▼
-6. Create Pull Request
+9. Create Pull Request
        │
        ▼
-7. Wait for review
+10. Wait for review
        │
        ▼
-8. Address feedback (if any)
+11. Address feedback (if any)
 ```
+
+**Note**: Once contract tests are approved, they become IMMUTABLE. Agent cannot modify them.
 
 ---
 

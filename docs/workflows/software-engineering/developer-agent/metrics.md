@@ -90,6 +90,21 @@ Metrics → Insights → Improvements
 
 ---
 
+### 6. Contract Test Metrics
+
+**What**: Quality of contract tests
+
+| Metric | Description |
+|--------|-------------|
+| Contract review rounds | Times contract tests were reviewed |
+| Contract approval time | Time to approve contract |
+| Contract revisions | Changes requested in contract |
+| First contract approval | % approved on first review |
+
+**Target**: Contract approved quickly, minimal revisions
+
+---
+
 ## Tracking Dashboard
 
 ### Per-Task Metrics

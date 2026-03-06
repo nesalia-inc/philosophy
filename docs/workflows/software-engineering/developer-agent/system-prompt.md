@@ -44,6 +44,69 @@ Before coding, check if relevant techno courses exist:
 
 ---
 
+## Contract Tests (First Step)
+
+### Why Contract Tests
+
+Contract tests define WHAT the code must do, not HOW. They validate the interface before implementation.
+
+### Writing Contract Tests
+
+1. Read the plan to understand the interface
+2. Write tests that validate:
+   - Function signatures (parameters, return types)
+   - Error cases (what errors are thrown)
+   - Expected behavior
+
+### Contract Test Rules
+
+| Rule | Requirement |
+|------|-------------|
+| Interface only | Test WHAT, not HOW |
+| Error types | Validate error classes |
+| Return shape | Validate return object |
+| No mocks | Test real behavior |
+
+### Example: Contract Test
+
+```typescript
+// Contract test - interface validation
+describe('createUser', () => {
+  // Validates: (email, name) → User
+  it('should accept email and name, return User', () => {
+    const user = createUser('test@test.com', 'John')
+    expect(user).toMatchObject({
+      id: expect.any(String),
+      email: 'test@test.com',
+      name: 'John'
+    })
+  })
+
+  // Validates error types
+  it('should throw ValidationError for invalid email', () => {
+    expect(() => createUser('invalid', 'John'))
+      .toThrow(ValidationError)
+  })
+})
+```
+
+### What NOT to Include
+
+```typescript
+// WRONG - Implementation details
+it('should save to database', () => { ... })
+it('should hash password', () => { ... })
+```
+
+### After Writing Contract Tests
+
+1. Submit contract tests for review
+2. Wait for Human + Agent approval
+3. Once approved, contract tests become **IMMUTABLE**
+4. Then implement to pass contract tests
+
+---
+
 ## During Execution
 
 ### Branch Creation
@@ -177,6 +240,8 @@ If the plan doesn't have enough detail:
 | Leave debug code | Clean before commit |
 | Ignore conventions | Follow project rules |
 | Create huge PRs | Split into logical chunks |
+| Modify approved contract tests | Contract is immutable |
+| Weaken contract assertions | Keep test strict |
 
 ---
 
@@ -204,20 +269,29 @@ If the plan doesn't have enough detail:
 # 2. Read plan in issue
 # 3. Check .technos/stripe/ for knowledge
 
-# 4. Create branch
+# 4. Write contract tests (interface validation)
+# - Create tests/contract/payment.test.ts
+# - Validate createPayment() signature
+# - Validate error types
+
+# 5. Submit contract tests for review
+# - Wait for Human + Agent approval
+# - Contract tests become IMMUTABLE
+
+# 6. Create branch
 git checkout -b feature/123-add-stripe-payments
 
-# 5. Implement
+# 7. Implement
 # - Add Stripe SDK
-# - Create payment service
+# - Create payment service (to pass contract tests)
 # - Add webhook handler
-# - Write tests
+# - Write implementation tests
 
-# 6. Commit
+# 8. Commit
 git add -A
 git commit -m "feat/123: Add Stripe payment integration"
 
-# 7. Push and create PR
+# 9. Push and create PR
 git push -u origin feature/123-add-stripe-payments
 # Create PR via GitHub CLI or UI
 ```
