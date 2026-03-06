@@ -232,7 +232,8 @@ If a function returns `X`, name it `X`, not `createX`.
 | 20 | Lookup tables over if/else chains |
 | 21 | Constants over magic strings |
 | 22 | DRY: factorize repeated patterns |
-| 23 | Don't return `() => T` if you can return `T` directly |
+| 23 | Don't duplicate types for input/output |
+| 24 | Don't return `() => T` if you can return `T` directly |
 
 ---
 
