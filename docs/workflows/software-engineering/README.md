@@ -9,6 +9,7 @@ Complete workflow system for Nesalia Inc - managing 25+ repositories with AI age
 1. [Project Initialization](./project-initialization.md)
 2. [Feature Development Workflow](./feature-development.md)
 3. [Issue Management](./issue-management.md)
+   - [Issue Templates](./issue-templates/)
 4. [Pull Request Process](./pull-request-process.md)
 5. [Code Review Guidelines](./code-review.md)
 6. [Release Process](./release-process.md)
