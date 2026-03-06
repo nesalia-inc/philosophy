@@ -1,51 +1,28 @@
 # Techno Courses Registry
 
-Complete list of all technology courses.
+> See [README](./README.md) for structure explanation.
 
 ---
 
-## Available Courses
+## Example Course (Stripe)
 
-| Techno | Status | Version | Last Updated |
-|--------|--------|---------|--------------|
-| [Stripe](./stripe/) | Complete | v14 | 2026-03 |
-| [Next.js](./nextjs/) | In Progress | v14 | - |
-| [Drizzle](./drizzle/) | Planned | - | - |
-| [PostgreSQL](./postgresql/) | Planned | - | - |
+| Course | Status | Version |
+|--------|--------|---------|
+| [Stripe](./stripe/) | Example | v14 |
 
----
-
-## In Progress
-
-### Next.js
-
-Coming soon:
-- App Router
-- Server Components
-- API Routes
-- Authentication
+The Stripe course is an **example** showing typical course structure.
 
 ---
 
-## Planned
+## Using as Template
 
-### Drizzle
+Use the Stripe course as a template when creating new courses:
 
-- Schema definition
-- Queries
-- Migrations
+1. Copy the structure
+2. Fill in technology-specific content
+3. Follow the patterns shown
 
-### PostgreSQL
-
-- Schema design
-- Query optimization
-- Indexes
-
----
-
-## Adding a New Course
-
-See [Creating a Course](../README.md#creating-a-new-course) in the main guide.
+See [README](./README.md) for details.
 
 ---
 
