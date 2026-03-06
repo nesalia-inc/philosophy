@@ -106,7 +106,8 @@ const withInvalidateKeys = (slug: string) =>
 
 ```typescript
 // Create collection db from operations
-const createCollectionDb = (
+// apply rule: createX → X
+const collectionDb = (
   operations: CollectionOperations,
   slug: string
 ): CollectionDb => ({
@@ -145,12 +146,12 @@ const createCollectionDb = (
 // The result IS the database, not a "wrapper"
 // Name it accordingly
 const database = (collections: Collection[]): Database =>
-  collections.reduce((acc, coll) => {
-    const operations = createCollectionOperations(coll)
-    const collectionDb = createCollectionDb(operations, coll.slug)
+  collections.reduce((accumulator, collection) => {
+    const operations = collectionOperations(collection)
+    const collectionDb = collectionDb(operations, collection.slug)
 
     // Expose directly as properties, not .get()
-    return { ...acc, [coll.slug]: collectionDb }
+    return { ...accumulator, [collection.slug]: collectionDb }
   }, {} as Database)
 
 // Usage
