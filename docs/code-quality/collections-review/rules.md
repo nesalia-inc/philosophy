@@ -6,7 +6,7 @@ General rules learned from codebase analysis. Apply to all projects.
 
 ## 1. Types Are Not `any`
 
-Never use `any`. Use proper types or `unknown`.
+Never use `any` or `unknown`. Use specific types.
 
 ```
 ❌ Record<string, any>
