@@ -67,10 +67,6 @@ const fieldType = (config: FieldTypeConfig) =>
         schema: config.schema,
         database: config.database
       }))
-    return Result.ok({
-      schema: config.schema,
-      database: config.database
-    })
   }
 
 // Usage
