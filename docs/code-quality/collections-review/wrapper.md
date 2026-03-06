@@ -139,22 +139,26 @@ const createCollectionDb = (
 })
 ```
 
-### Step 3: Db Wrapper = Simple Map
+### Step 3: The Result IS the Database
 
 ```typescript
-// Just a map of collections
-type DbWrapper = Map<string, CollectionDb>
-
-const createDbWrapper = (collections: Collection[]): DbWrapper =>
+// The result IS the database, not a "wrapper"
+// Name it accordingly
+const database = (collections: Collection[]): Database =>
   collections.reduce((acc, coll) => {
     const operations = createCollectionOperations(coll)
-    acc.set(coll.slug, createCollectionDb(operations, coll.slug))
-    return acc
-  }, new Map())
+    const collectionDb = createCollectionDb(operations, coll.slug)
+
+    // Expose directly as properties, not .get()
+    return { ...acc, [coll.slug]: collectionDb }
+  }, {} as Database)
 
 // Usage
-const db = createDbWrapper(collections)
-db.get('users')?.find({ where: { status: 'active' } })
+const db = database(collections)
+
+// Direct access by property
+db.users.find({ where: { status: 'active' } })
+db.posts.create({ data: { title: 'Hello' } })
 ```
 
 ---
@@ -168,6 +172,22 @@ db.get('users')?.find({ where: { status: 'active' } })
 | Untestable | Each function testable |
 | Hidden dependencies | Explicit composition |
 | Mutation in constructor | Pure functions |
+| `createDbWrapper` | `database` (the result IS the database) |
+| `db.get('users')` | `db.users` (direct property access) |
+
+## Naming Rule
+
+If `createX` returns `X`, just name it `X`.
+
+```
+❌ const createUser = (data) => User
+❌ const createDatabase = (config) => Database
+
+✅ const user = (data) => User
+✅ const database = (config) => Database
+```
+
+The function returns the thing, not a factory. Name it after what it returns.
 
 ---
 

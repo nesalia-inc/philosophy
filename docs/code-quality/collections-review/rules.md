@@ -192,6 +192,20 @@ If something goes wrong, the caller must know.
 
 ---
 
+## Naming Rule
+
+If a function returns `X`, name it `X`, not `createX`.
+
+```
+❌ const createUser = (data) => User
+❌ const createDatabase = (config) => Database
+
+✅ const user = (data) => User
+✅ const database = (config) => Database
+```
+
+---
+
 ## Summary
 
 | Rule | Principle |
@@ -208,6 +222,7 @@ If something goes wrong, the caller must know.
 | 10 | Types as data |
 | 11 | Composition |
 | 12 | No silent failures |
+| 13 | `createX` → `X` if returns X |
 
 ---
 
