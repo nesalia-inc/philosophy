@@ -1,10 +1,23 @@
 # Double Function Pattern
 
-Why returning a function from a function creates confusion.
+When returning a function from a function is valid — and when it's not.
 
 ---
 
-## Current Implementation
+## The Intent: Optional Configuration
+
+The goal is to support both:
+
+```typescript
+text()                    // Field without options
+text({ min: 4, max: 20 }) // Field with options
+```
+
+This requires the function to accept optional parameters and return different results.
+
+---
+
+## Why Current Implementation Doesn't Work
 
 ```typescript
 export const fieldType = (config: FieldTypeConfig): (() => FieldTypeInstance) => {
@@ -13,91 +26,84 @@ export const fieldType = (config: FieldTypeConfig): (() => FieldTypeInstance) =>
     database: config.database ?? {}
   })
 }
-
-// Usage:
-const text = fieldType({ schema: z.string(), database: { type: 'text' } })
-// text is a function, not the result
-
-const textField = text()  // Need to call again to get result
 ```
+
+This doesn't support options at all. The config is static.
 
 ---
 
-## What's Wrong
-
-### 1. Double Call
+## Valid Pattern: Options as Parameters
 
 ```typescript
-fieldType({ ... })()  // Call twice to get result
-```
-
-The function returns another function that must be called. Why?
-
-### 2. Confusing API
-
-```typescript
-// What is text?
-const text = fieldType({ schema: z.string() })
-
-// Is it:
-// A) The field itself?
-// B) A function that returns the field?
-// C) A factory?
-
-// Can't tell from the code.
-```
-
-### 3. Useless Types
-
-```typescript
-type FieldTypeInstance = { schema, database }
-type FieldTypeCreator = () => FieldTypeInstance  // Just describes what fieldType returns
-
-// These are redundant. FieldTypeCreator = what fieldType returns.
-```
-
----
-
-## What It Should Be
-
-```typescript
-// Simple: function returns the thing
-type Field = {
-  schema: z.ZodType
-  database: unknown
+type FieldOptions = {
+  min?: number
+  max?: number
+  required?: boolean
 }
 
-const field = (config: { schema: z.ZodType; database?: unknown }): Field => ({
-  schema: config.schema,
-  database: config.database ?? {}
-})
+const text = (options?: FieldOptions): Field => {
+  let schema = z.string()
 
-// Usage:
-const text = field({ schema: z.string(), database: { type: 'text' } })
-// text IS the field. No second call needed.
+  if (options?.min) schema = schema.min(options.min)
+  if (options?.max) schema = schema.max(options.max)
+
+  return {
+    schema,
+    database: { type: 'text' }
+  }
+}
+
+// Usage
+text()                    // { schema: z.string(), database: { type: 'text' } }
+text({ min: 4 })          // { schema: z.string().min(4), database: { type: 'text' } }
+text({ min: 4, max: 20 }) // { schema: z.string().min(4).max(20), database: { type: 'text' } }
+```
+
+This works perfectly. No double function needed.
+
+---
+
+## When Double Function IS Valid
+
+The double function pattern is valid when:
+
+1. **Factory pattern**: You create a factory that returns configured functions
+2. **Lazy evaluation**: You don't want to compute until called
+3. **Reuse**: The same configuration creates multiple instances
+
+```typescript
+// Valid use case: factory
+const createValidator = (rules) => (data) => validate(data, rules)
+const validateEmail = createValidator(emailRules)
+
+// Valid use case: lazy
+const expensiveComputation = () => computeExpensiveThing()
 ```
 
 ---
 
-## The Rule
+## When Double Function is NOT Valid
 
-> If a function returns `T`, return `T`, not `() => T`.
+When the outer function could simply return the result:
 
-```
-❌ const fieldType = (config) => () => result
-✅ const field = (config) => result
+```typescript
+// Not valid: just returns static data
+const fieldType = (config) => () => ({ schema: config.schema })
+
+// Should be:
+const fieldType = (config) => ({ schema: config.schema })
 ```
 
 ---
 
 ## Summary
 
-| Before | After |
-|--------|-------|
-| `fieldType()()` | `field()` |
-| Returns function | Returns value |
-| Must call twice | Call once |
-| Confusing | Clear |
+| Pattern | Valid? | When |
+|---------|--------|------|
+| `(opts?) => T` | ✅ | Optional configuration |
+| `() => () => T` | ❌ | Static return |
+| `(a) => (b) => T` | ✅ | Factory pattern |
+| `(a) => () => T` | ❌ | Could return T directly |
 
 ---
 
