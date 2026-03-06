@@ -24,7 +24,7 @@ Well-structured issues = efficient development:
 
 All repositories use standard templates from `.github/ISSUE_TEMPLATE/`
 
-Templates are stored in `docs/workflows/software-engineering/issue-templates/`
+Templates are stored in `docs/workflows/software-engineering/issues-management/issue-templates/`
 
 | Template | Use For | File |
 |----------|---------|------|
@@ -385,10 +385,10 @@ When assigning an issue to an agent, include:
 
 ### Template Files
 
-Templates are maintained in `docs/workflows/software-engineering/issue-templates/`:
+Templates are maintained in `docs/workflows/software-engineering/issues-management/issue-templates/`:
 
 ```
-docs/workflows/software-engineering/issue-templates/
+docs/workflows/software-engineering/issues-management/issue-templates/
 ├── 0000-feature.md       # Feature request
 ├── 0000-bug.md          # Bug report
 ├── 0000-task.md         # General task
