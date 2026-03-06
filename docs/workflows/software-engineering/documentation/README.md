@@ -1,29 +1,76 @@
 # Documentation Standards
 
-Comprehensive guide to creating high-quality documentation for both users and AI agents.
+Comprehensive guide to creating high-quality documentation for OSS, internal developers, and AI agents.
 
 ---
 
 ## Table of Contents
 
 1. [Philosophy](./philosophy.md)
-2. [User Documentation](./user-docs/)
-3. [Agent Configuration](./agent-config/)
-4. [Templates](./templates/)
-5. [Maintenance](./maintenance.md)
+2. [Multi-Level Documentation](./multi-level.md)
+3. [External (OSS)](./external/)
+4. [Internal](./internal/)
+5. [Agent Configuration](./agent-config/)
+6. [Templates](./templates/)
+7. [Maintenance](./maintenance.md)
 
 ---
 
-## Overview
+## The Big Picture
 
-Documentation serves two distinct audiences with different needs:
+Every package we develop is designed to be **Open Source**. Our documentation must be at the level of Next.js, React, and other industry-standard tools.
 
-| Audience | Primary Question | Needs |
-|----------|-----------------|-------|
-| **Users** | "How do I use this?" | Quick starts, examples, troubleshooting |
-| **AI Agents** | "How do I implement this?" | Rules, patterns, complete context |
+This means **documentation is an integral part of the product**, not an afterthought.
 
-Good documentation addresses both without compromise.
+---
+
+## Three Levels of Documentation
+
+| Level | Audience | Question | Purpose |
+|-------|----------|---------|---------|
+| **External (OSS)** | Developers using our packages | "How do I use this?" | Integration |
+| **Internal** | Developers working on the code | "How does this work?" | Contribution |
+| **Agent** | AI agents on any project | "What exists and how do I use it?" | Automation |
+
+### The Package Dependency Problem
+
+```
+Project A (working on)
+    │
+    ▼ uses
+┌─────────────────────────────────────┐
+│        Package B (we built)         │
+│                                     │
+│  ├── Doc External: How to use       │  ← External developers
+│  ├── Doc Internal: How it works    │  ← Internal developers
+│  └── Doc Agent: Everything          │  ← All AI agents
+└─────────────────────────────────────┘
+```
+
+When an agent works on Project A, it must know:
+- Package B exists
+- How to use it
+- All its options
+- How it connects to other packages
+
+---
+
+## The Central Catalog
+
+All packages must be documented in a **central catalog** so agents can discover and use them:
+
+```
+docs/
+├── index.md                 # List of all packages
+├── packages/               # Agent documentation for each package
+│   ├── auth.md
+│   ├── database.md
+│   └── ui.md
+└── architecture/           # How packages connect together
+    └── overview.md
+```
+
+This catalog is the **single source of truth** for all AI agents.
 
 ---
 

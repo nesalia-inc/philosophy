@@ -15,7 +15,59 @@ Documentation written for AI agents.
 
 ---
 
-## The .ai/ Directory
+## The Agent Documentation Challenge
+
+When an agent works on Project A that uses Package B:
+
+```
+Project A (agent is working on)
+    │
+    ▼ needs to use
+┌─────────────────────────────────────┐
+│        Package B (we built)          │
+│                                     │
+│  External doc: How to use?          │
+│  Internal doc: How it works?       │
+│  Agent doc: What CAN I do with it?  │
+└─────────────────────────────────────┘
+```
+
+**The agent needs to know everything about Package B** to use it properly.
+
+---
+
+## Two Types of Agent Documentation
+
+### 1. Project-Level (.ai/)
+
+For the specific project the agent is working on:
+
+```
+project/
+├── .ai/
+│   ├── rules.md        # Coding rules
+│   ├── prompts/        # Workflow instructions
+│   └── context.md      # Project overview
+```
+
+### 2. Package-Level (Central Catalog)
+
+For all packages available in the organization:
+
+```
+docs/
+├── packages/           # One file per package
+│   ├── auth.md
+│   ├── database.md
+│   └── ui.md
+└── index.md           # List of all packages
+```
+
+**The central catalog is critical**: it allows any agent on any project to discover and use all packages.
+
+---
+
+## Part 1: Project-Level (.ai/)
 
 Every project should have:
 
@@ -27,6 +79,104 @@ Every project should have:
 │   ├── bug-fix.md
 │   └── review.md
 └── context.md         # Project overview
+```
+
+---
+
+## Part 2: Package Documentation (Central Catalog)
+
+For agents to discover and use all packages:
+
+```
+docs/
+├── index.md           # List of all packages
+└── packages/
+    ├── auth.md        # Everything about @nesalia/auth
+    ├── database.md    # Everything about @nesalia/db
+    └── ui.md          # Everything about @nesalia/ui
+```
+
+### Package Agent Document Template
+
+```markdown
+# @nesalia/auth
+
+## Overview
+Complete authentication solution for web applications.
+
+## Exports
+
+### authenticate(credentials)
+```typescript
+type Credentials = { email: string; password: string }
+type AuthResult = Result<User, AuthError>
+
+authenticate(credentials: Credentials): Promise<AuthResult>
+```
+
+**Errors**:
+- `invalid_credentials` - Wrong password
+- `user_not_found` - Email not registered
+- `account_locked` - Too many failed attempts
+
+### createUser(data)
+```typescript
+type CreateUserInput = {
+  email: string
+  password: string
+  name?: string
+}
+type CreateUserResult = Result<User, CreateUserError>
+
+createUser(input: CreateUserInput): Promise<CreateUserResult>
+```
+
+**Errors**:
+- `email_taken` - Email already exists
+- `invalid_email` - Invalid email format
+- `weak_password` - Password too weak
+
+### verifyToken(token)
+```typescript
+verifyToken(token: string): Result<TokenPayload, TokenError>
+```
+
+## Configuration
+
+```typescript
+type AuthConfig = {
+  jwtSecret: string           // Required
+  jwtExpiry: number           // default: 3600 (1 hour)
+  providers: Provider[]      // default: ['email']
+  maxLoginAttempts: number    // default: 5
+  lockoutDuration: number     // default: 900 (15 min)
+}
+```
+
+## Dependencies
+- `@nesalia/crypto` - Password hashing (bcrypt)
+- `@nesalia/jwt` - Token generation/verification
+
+## Related Packages
+- `@nesalia/db` - User storage
+- `@nesalia/ui` - Auth UI components (LoginForm, RegisterForm)
+```
+
+---
+
+### How Agents Use the Catalog
+
+When an agent needs to add authentication to a project:
+
+```
+1. Agent reads docs/index.md
+   → Finds @nesalia/auth
+
+2. Agent reads docs/packages/auth.md
+   → Knows all functions, options, errors
+
+3. Agent implements using the documented API
+   → Consistent, correct usage
 ```
 
 ---
