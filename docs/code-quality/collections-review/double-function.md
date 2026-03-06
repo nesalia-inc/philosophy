@@ -35,6 +35,21 @@ This doesn't support options at all. The config is static.
 ## Valid Pattern: Options as Parameters
 
 ```typescript
+// Specific database type, not unknown
+type DatabaseField =
+  | { type: 'text' }
+  | { type: 'integer' }
+  | { type: 'boolean' }
+  | { type: 'date' }
+  | { type: 'timestamp' }
+  | { type: 'array'; itemType: string }
+  | { type: 'jsonb' }
+
+type Field = {
+  schema: z.ZodType
+  database: DatabaseField
+}
+
 type FieldOptions = {
   min?: number
   max?: number
