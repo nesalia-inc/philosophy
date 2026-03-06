@@ -22,7 +22,9 @@ Complete workflow system for Nesalia Inc - managing 25+ repositories with AI age
     - [System Prompt](./developer-agent/system-prompt.md)
     - [Metrics](./developer-agent/metrics.md)
 11. [Techno Expertise](./techno-expertise/)
-12. [Repository Templates](./templates/)
+12. [Case Studies](./case-studies/)
+    - [OpenAI Harness Engineering](./case-studies/openai-harness-engineering.md)
+13. [Repository Templates](./templates/)
 
 ---
 
