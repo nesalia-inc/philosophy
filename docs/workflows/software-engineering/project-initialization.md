@@ -66,15 +66,31 @@ project-template/
 
 ## Creating a New Repository
 
-### Step 1: Use the Template
+### Option 1: Using the CLI (Recommended)
 
 ```bash
-# Option A: GitHub UI
+# Create a new project using the CLI
+npx @nesalia/create my-new-project
+
+# Specify a template
+npx @nesalia/create my-api api
+npx @nesalia/create my-cli cli
+```
+
+Available templates:
+- `web` (default) - Full Next.js application
+- `api` - Backend-only API
+- `cli` - CLI tool
+- `library` - Shared npm package
+
+### Option 2: Using GitHub Template
+
+```bash
 # 1. Go to org/project-template
 # 2. Click "Use this template"
 # 3. Name the new repository
 
-# Option B: CLI
+# Or via CLI
 git clone git@github.com:nesalia/project-template.git my-new-repo
 cd my-new-repo
 rm -rf .git
