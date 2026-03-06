@@ -4,6 +4,73 @@ How to train agents to become experts on technologies.
 
 ---
 
+## Three-Pillar System
+
+The techno expertise system is built on **three types of documentation**:
+
+```
+techno-expertise/
+├── techno-courses/      # Technology-specific (Stripe, React, PostgreSQL)
+├── need-based-guides/   # Problem-centric (Caching, Database, State)
+└── theoretical-courses/ # Theory (Graph Theory, Automata, Category Theory)
+```
+
+Each serves a different purpose in developer education.
+
+---
+
+### 1. Techno Courses
+
+**Focus**: One specific technology
+**Question**: "Everything about [TECHNOLOGY]"
+**Example**: Stripe, React, PostgreSQL
+
+See [Techno Courses](./techno-courses/) for details.
+
+---
+
+### 2. Need-Based Guides
+
+**Focus**: Solving specific problems
+**Question**: "How to solve [PROBLEM]"
+**Example**: How to cache, How to handle state, How to design APIs
+
+See [Need-Based Guides](./need-based-guides/) for details.
+
+---
+
+### 3. Theoretical Courses
+
+**Focus**: Fundamental concepts
+**Question**: "Why does it work this way?"
+**Example**: Graph Theory, Automata, Category Theory, Probability
+
+See [Theoretical Courses](./theoretical-courses/) for details.
+
+---
+
+## Comparison
+
+| Aspect | Techno Course | Need-Based Guide | Theoretical Course |
+|--------|---------------|------------------|-------------------|
+| Scope | One technology | Multiple technologies | Concepts |
+| Organization | By concept | By problem | By theory |
+| Audience | Learn a tech | Solve a problem | Understand why |
+| Examples | Code | Cross-tech | Math, diagrams |
+| Updates | Frequent | Medium | Rare |
+
+---
+
+## When to Use Each
+
+| Situation | Use |
+|-----------|-----|
+| Need to implement with [Technology] | Techno Course |
+| Need to solve [Problem] | Need-Based Guide |
+| Need to understand [Concept] | Theoretical Course |
+
+---
+
 ## The Problem
 
 ```
@@ -183,11 +250,25 @@ Current version: X.Y.Z
 
 ---
 
-## Available Courses
+## Creating Content
 
-See [Registry](./index.md) for complete list.
+### Course Creation Process
+
+Each type of content has its own creation process:
+
+| Type | Process | Template |
+|------|---------|----------|
+| Techno Course | [Course Creation](./course-creation/) | [Template](./course-creation/templates/course-template.md) |
+| Need-Based Guide | TBD | TBD |
+| Theoretical Course | TBD | TBD |
 
 ---
 
-*Document version: 1.0*
+## Available Courses
+
+See [Registry](./registry/index.md) for complete list.
+
+---
+
+*Document version: 1.1*
 *Last updated: 2026-03-06*
