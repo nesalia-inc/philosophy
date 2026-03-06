@@ -103,6 +103,43 @@ next/
 
 ---
 
+### Step 4: Handle Errors Explicitly
+
+The module has no custom error types:
+
+```typescript
+// Current: catches everything, returns empty
+try {
+  return await loadCollectionsFromConfig(...)
+} catch (error) {
+  debugLog(debug, `Failed:`, error)
+  return {}  // ← caller doesn't know it failed
+}
+
+// Current: generic Error
+throw new Error(`Config path must be within...`)
+```
+
+Should be:
+
+```typescript
+// Define error types
+type ConfigError =
+  | { type: 'invalid_path'; path: string }
+  | { type: 'load_failed'; reason: string }
+  | { type: 'parse_error'; file: string }
+
+// Return Result, not empty
+const loadCollections = (path): Result<Collections, ConfigError> =>
+  try {
+    Result.ok(await load(path))
+  } catch (e) {
+    Result.err({ type: 'load_failed', reason: e.message })
+  }
+```
+
+---
+
 ## The Rule
 
 Before writing a module, answer:
