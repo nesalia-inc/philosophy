@@ -1,20 +1,70 @@
 # Pull Request Templates
 
-Ready-to-use GitHub pull request templates that can be directly copied into any project repository.
+Ready-to-use GitHub pull request templates designed for modern development workflows. These templates focus on **human judgment** while letting **CI handle automated checks**.
 
 ## Available Templates
 
-| Template | Usage | Review Level |
-|----------|-------|--------------|
-| **[feature.md](./feature.md)** | New features and functionality | Standard |
-| **[bugfix.md](./bugfix.md)** | Bug fixes in production code | Standard |
-| **[refactor.md](./refactor.md)** | Code quality improvements | Standard |
-| **[documentation.md](./documentation.md)** | Docs only changes | Light |
-| **[security.md](./security.md)** | Security fixes | Strict |
-| **[performance.md](./performance.md)** | Performance optimizations | Standard |
-| **[hotfix.md](./hotfix.md)** | Emergency production fixes | Expedited |
-| **[breaking-change.md](./breaking-change.md)** | Breaking API changes | Strict + Tech Lead |
-| **[quick-fix.md](./quick-fix.md)** | Trivial fixes (< 50 lines) | Light |
+| Template | Usage | Review Level | Focus |
+|----------|-------|--------------|-------|
+| **[feature.md](./feature.md)** | New features and functionality | Standard | Design decisions, user impact |
+| **[bugfix.md](./bugfix.md)** | Bug fixes in production code | Standard | Root cause, regression prevention |
+| **[refactor.md](./refactor.md)** | Code quality improvements | Standard | Behavior verification |
+| **[documentation.md](./documentation.md)** | Docs only changes | Light | Clarity, completeness |
+| **[security.md](./security.md)** | Security fixes | Strict | Vulnerability analysis |
+| **[performance.md](./performance.md)** | Performance optimizations | Standard | Benchmarks, regressions |
+| **[hotfix.md](./hotfix.md)** | Emergency production fixes | Expedited | Minimal fix, post-mortem |
+| **[breaking-change.md](./breaking-change.md)** | Breaking API changes | Strict + Tech Lead | Migration path |
+| **[quick-fix.md](./quick-fix.md)** | Trivial fixes (< 50 lines) | Light | Quick verification |
+
+---
+
+## Common Template Structure
+
+All templates follow this modern structure:
+
+### 1. Summary
+One-sentence overview with example
+
+### 2. Context
+- **Motivation** (feature) / **Bug Description** (bugfix) / **Root Cause** (hotfix)
+- Why this change is needed
+
+### 3. Implementation
+- High-level approach (what changed)
+- Technical details in `<details>` (optional)
+
+### 4. Verification
+- Test plan
+- How to verify it works
+
+### 5. Impact Assessment
+- Breaking changes?
+- Migration needed?
+- Rollback plan?
+
+### 6. Additional Context
+- Related issues
+- Areas for feedback
+
+---
+
+## Philosophy Alignment
+
+All templates enforce the project philosophy through **human-focused checklists**:
+
+### What CI Validates Automatically
+✓ Type checking (no implicit any)
+✓ Linting (code style)
+✓ Tests (coverage > 80%)
+✓ Code patterns (Result<T, E>, Option<T>)
+✓ Function length (< 50 lines)
+
+### What Humans Verify
+- Design follows project patterns
+- Trade-offs are documented
+- User impact is considered
+- Security implications reviewed
+- Performance is acceptable
 
 ---
 
@@ -53,21 +103,32 @@ assignees: ''
 ---
 ```
 
-### Philosophy-Aligned Checklists
-- **Result<T, E>** pattern for error handling
-- **Option<T>** pattern for optional values
-- No `any` types
-- Functions under 50 lines
-- Real tests, not mocks
+### Modern Design Principles
 
-### Complete Sections
-- Files changed tracking
-- Test plan requirements
-- Code quality checklist
-- Security review
-- Performance considerations
-- Deployment steps
-- Rollback plan
+**1. Focus on Human Judgment**
+- CI validates: type checking, linting, tests, code patterns
+- You provide: design decisions, trade-offs, user impact
+
+**2. Action-Oriented Sections**
+- "Motivation" instead of "Description"
+- "Implementation" instead of "Files changed"
+- "Impact Assessment" instead of "Details"
+
+**3. Examples & Guidance**
+- Each section includes example text
+- Clear placeholders with context
+- `<details>` for optional information
+
+**4. Minimal Cognitive Load**
+- 5-7 key questions, not 20+ checkboxes
+- Only what requires human judgment
+- Details hidden by default
+
+**5. Philosophy Alignment**
+- Checklists focus on what CI can't verify
+- Design patterns adherence
+- User impact consideration
+- Security & privacy review
 
 ---
 

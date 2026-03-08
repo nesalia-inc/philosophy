@@ -6,81 +6,33 @@ labels: bugfix
 assignees: ''
 ---
 
-<!-- One sentence explaining which bug is fixed -->
-## Bug Fix Summary
+## Summary
+_What bug is being fixed in one sentence?_
 
+**Example**: "Fix login redirect loop when user has expired session"
 
-
-Fixes #[issue-number]
+Fixes #
 
 ---
 
 ## Bug Description
-<!-- Describe the bug symptoms -->
+_What was the bug? What symptoms did users experience?_
 
+**Before**: What was happening (brief)
 
----
-
-## Expected Behavior
-<!-- What should happen -->
-
-
----
-
-## Actual Behavior
-<!-- What was happening -->
-
+**After**: What happens now (brief)
 
 ---
 
 ## Root Cause
-<!-- What was causing the bug -->
+_Why was this happening?_
+
+<!-- Example: "Missing null check when user session expires" -->
 
 
----
 
-## Type of Change
-
-- [ ] **Bug fix** (non-breaking)
-- [ ] **Breaking change** (fix that changes behavior)
-- [ ] **Hotfix** (urgent production fix)
-
----
-
-## Files Changed
-```bash
-# List files
-```
-
----
-
-## Reproduction Steps
-<!-- Steps to reproduce the original bug -->
-1.
-2.
-3.
-
----
-
-## Fix Verification
-- [ ] Can reproduce original bug
-- [ ] Bug is fixed with this PR
-- [ ] Regression tests added
-- [ ] Edge cases covered
-
----
-
-## Test Cases
-<!-- Specific tests added -->
-```typescript
-it('', () => {
-
-})
-```
-
----
-
-## Root Cause Analysis
+<details>
+<summary>Technical analysis (click to expand)</summary>
 
 ### Before (Broken Code)
 ```typescript
@@ -92,42 +44,74 @@ it('', () => {
 // Show the fix
 ```
 
+</details>
+
 ---
 
-## Regression Prevention
+## Fix Verification
+_How do we know this fix works?_
 
-### Tests Added
-<!-- New tests to prevent this bug from coming back -->
+- [ ] Can reproduce original bug
+- [ ] Fix resolves the issue
+- [ ] Regression test added
+- [ ] Edge cases covered
 
+### Test Cases Added
+<!-- Specific tests to prevent this bug from returning -->
 
-### Monitoring
-<!-- How to detect if this comes back -->
-
+```typescript
+it('handles expired session without redirect loop', () => {
+  // test code
+})
+```
 
 ---
 
 ## Impact Assessment
 
 ### Users Affected
-<!-- Who was impacted by this bug -->
+_Who experienced this bug?_
+
+<!-- Example: "Users with sessions > 24h old (approximately 15% of daily active users)" -->
 
 ### Severity
-- [ ] **Critical** (blocks functionality)
-- [ ] **High** (major impact)
-- [ ] **Medium** (minor impact)
-- [ ] **Low** (cosmetic)
+- [ ] **Critical** (production down, data loss)
+- [ ] **High** (major functionality blocked)
+- [ ] **Medium** (workaround exists)
+- [ ] **Low** (cosmetic, minor impact)
+
+### Breaking Changes
+- [ ] No breaking changes
+- [ ] **Behavior change** - users may notice
 
 ---
 
 ## Deployment
 
 ### Urgency
-- [ ] Deploy immediately
-- [ ] Deploy in next release
-- [ ] Deploy in scheduled window
+- [ ] **Immediate** (critical/hotfix)
+- [ ] **Next release** (standard)
+- [ ] **Scheduled window** (low priority)
 
 ### Rollback Plan
-```bash
-# If issues arise
-```
+_If something goes wrong, how do we undo?_
 
+<!-- Example: "Revert commit, no data migration needed" -->
+
+---
+
+## Additional Context
+
+- Link to bug report: #
+- Related issues: #
+- Areas you'd like specific feedback on
+
+<!--
+💡 CI automatically validates:
+✓ Type checking
+✓ Linting
+✓ All tests pass
+✓ Code patterns (Result<T, E>, Option<T>)
+
+Focus on explaining the bug and ensuring it doesn't come back.
+-->

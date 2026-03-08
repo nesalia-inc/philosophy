@@ -1,49 +1,40 @@
 ---
 name: Refactor Pull Request
-about: Template for code refactoring
+about: Template for code refactoring (no behavior changes)
 title: 'refactor: '
 labels: refactor
 assignees: ''
 ---
 
-<!-- One sentence explaining what is refactored -->
-## Refactor Summary
+## Summary
+_What is being refactored in one sentence?_
 
-
+**Example**: "Extract user authentication logic into dedicated service module"
 
 ---
 
 ## Motivation
+_Why refactor this code? What problem does it solve?_
 
-### Why refactor?
-<!-- Explain the problem with current code -->
+- **Problem**: What was wrong with the current code
+- **Benefit**: What improvement this brings
 
-### What problem does it solve?
-<!-- Benefits of this refactor -->
+**Example**: "Authentication logic was duplicated across 5 controllers, making changes error-prone"
 
----
 
-## Type of Change
-
-- [ ] **Refactor** (no behavior change)
-- [ ] **Architecture** (structural change)
-
-### Behavior Contract
-- [ ] **No behavior changes** - Output is identical
-- [ ] **No API changes** - Public signatures unchanged
-- [ ] **Tests updated** - Tests verify same behavior
 
 ---
 
 ## Refactoring Approach
-<!-- Explain the refactoring technique used -->
+_How was the code restructured?_
 
+- **Technique**: Extract method / Rename / Move / etc.
+- **Scope**: Which files/modules are affected
 
----
+<details>
+<summary>Before & After comparison (click to expand)</summary>
 
-## Before & After Comparison
-
-### Before (Code with Issues)
+### Before (Problematic Code)
 ```typescript
 // Show the problematic code
 ```
@@ -53,70 +44,85 @@ assignees: ''
 // Show the improved code
 ```
 
----
-
-## Files Refactored
-```bash
-# List files
-```
+</details>
 
 ---
 
-## Test Strategy
+## Behavior Verification
+_How do we know behavior hasn't changed?_
 
-### Refactoring Tests
-- [ ] All existing tests still pass
-- [ ] No test behavior changed
-- [ ] Tests verify same outputs
+### Test Results
+- [ ] All existing tests pass (no changes to test assertions)
+- [ ] No new test failures
+- [ ] Integration tests pass
 
-### New Tests
-- [ ] Tests for new patterns
-- [ ] Tests for edge cases
-- [ ] Integration tests updated
+<details>
+<summary>Test commands (click to expand)</summary>
 
-### Regression Check
 ```bash
+# Full test suite
 npm run test
+
+# Integration tests
 npm run test:integration
+
+# E2E tests (if applicable)
+npm run test:e2e
 ```
+</details>
+
+### Behavior Contract
+- [ ] **No behavior changes** - Outputs are identical
+- [ ] **No API changes** - Public signatures unchanged
+- [ ] **No performance regression** - Benchmarks comparable
 
 ---
 
-## Metrics
+## Impact Assessment
 
-### Code Quality Improvements
-<!-- Measurable improvements -->
-- Cyclomatic complexity: [before] → [after]
-- Lines of code: [before] → [after]
-- Test coverage: [before] → [after]%
-- `any` types: [before] → [after]
+### Breaking Changes
+- [ ] No breaking changes
+- [ ] **Internal changes only** - External behavior unchanged
 
----
+### Consumers Affected
+- [ ] No consumers affected (internal refactor)
+- [ ] **API changed** - migration guide provided below
 
-## Migration Path
+### Migration Guide
+_If consumers need to update their code:_
 
-### Backwards Compatibility
-- [ ] Fully compatible (no changes needed)
-- [ ] Minor breaking changes (documented)
-- [ ] Major breaking changes (migration guide provided)
-
-### Migration Required
-<!-- If consumers need to update code -->
 ```typescript
 // Show migration example
 ```
 
 ---
 
-## Documentation
+## Quality Metrics
+_Measurable improvements (optional but recommended)_
 
-- [ ] README updated with new patterns
-- [ ] Migration guide provided (if needed)
-- [ ] Code examples updated
-- [ ] JSDoc updated
+| Metric | Before | After | Improvement |
+|--------|--------|-------|-------------|
+| Lines of code | | | |
+| Cyclomatic complexity | | | |
+| Function count | | | |
+| Test coverage | | | |
+| `any` types | | | |
 
 ---
 
-## Open Questions
-<!-- Design decisions that need discussion -->
+## Additional Context
 
+- Related issue: #
+- Design discussion: #
+- Areas you'd like specific feedback on
+
+<!--
+💡 Refactoring checklist:
+✓ No behavior changes (verified by tests)
+✓ All tests pass
+✓ Code is more maintainable
+✓ Philosophy patterns applied
+
+CI automatically validates code quality and patterns.
+Focus on proving behavior is unchanged.
+-->

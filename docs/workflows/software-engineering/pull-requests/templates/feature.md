@@ -6,169 +6,130 @@ labels: feature
 assignees: ''
 ---
 
-<!-- One sentence explaining what this PR does -->
 ## Summary
+_What does this PR do in one sentence?_
+
+**Example**: "Add user authentication with JWT tokens for secure API access"
 
 
 
-<!-- Closes #[issue-number] -->
-## Related Issue
+
+
+## Motivation
+_Why is this change needed? What problem does it solve?_
+
+- Related issue: #
+- Context: Why now? What's the user impact?
 
 
 
-## Type of Change
 
-- [ ] **New feature** (non-breaking change)
-- [ ] **Bug fix** (non-breaking change)
-- [ ] **Breaking change** (fix or feature that breaks existing functionality)
-- [ ] **Refactor** (code quality, no behavior change)
-- [ ] **Documentation** (docs only)
-- [ ] **Performance** (performance improvement)
-- [ ] **Test** (adding/updating tests)
 
----
+## Implementation
+_How does this work at a high level?_
 
-## Files Added
-```bash
-# List new files
-```
+- **Key change 1**: Brief description
+- **Key change 2**: Brief description
+- **Key change 3**: Brief description
 
-## Files Modified
-```bash
-# List modified files
-```
+<details>
+<summary>Technical details (click to expand)</summary>
 
-## Key Changes
-<!-- Bullet points of main changes -->
+### Files Added
+<!-- Auto-detected by CI, shown for reference -->
 
+### Files Modified
+<!-- Auto-detected by CI, shown for reference -->
+
+### Architecture decisions
+- Any important architectural choices
+- Trade-offs and why this approach
+- Links to design docs if applicable
+
+</details>
 
 ---
 
 ## Test Plan
+_How do we verify this works correctly?_
 
-### Unit Tests
-- [ ] All new functions have unit tests
-- [ ] Edge cases covered
-- [ ] Tests use real implementations, not mocks
+- [ ] Unit tests pass locally (`npm run test`)
+- [ ] Manual testing completed
+- [ ] Edge cases covered (error paths, null handling, etc.)
 
-### Integration Tests
-- [ ] API endpoints tested end-to-end
-- [ ] Database operations verified
-- [ ] Error paths tested
+<details>
+<summary>Test commands (click to expand)</summary>
 
-### Manual Testing
-- [ ] Tested locally
-- [ ] Screenshots/recordings attached (for UI changes)
-
-### Test Commands
 ```bash
+# Unit tests
 npm run test
+
+# Integration tests
 npm run test:integration
+
+# E2E tests (if applicable)
+npm run test:e2e
 ```
+</details>
 
 ---
 
-## Code Quality Checklist
+## Impact Assessment
 
-### Philosophy Alignment
-- [ ] All functions returning success/error use `Result<T, E>`
-- [ ] No silent failures (uncaught errors)
-- [ ] Errors are user-visible or logged
-- [ ] Error types are explicit (not `any`)
-- [ ] No `null` or `undefined` in type signatures
-- [ ] Optional values use `Option<T>`
+### Breaking Changes
+- [ ] No breaking changes
+- [ ] **Breaking changes** - see migration plan below
 
-### Function Quality
-- [ ] Functions under 50 lines
-- [ ] Single responsibility per function
-- [ ] Pure functions when possible
-- [ ] No code duplication
+### Migration Guide
+_If breaking changes, how do existing users upgrade?_
 
-### TypeScript
-- [ ] No `any` types
-- [ ] Strict mode enabled
-- [ ] Proper type exports
-- [ ] `npm run typecheck` passes
+<!-- Example: "Update config.js to add new API_KEY field" -->
 
-### Linting
-- [ ] `npm run lint` passes
-- [ ] No console.log left in production code
+### Rollback Plan
+_If something goes wrong in production, how do we undo?_
+
+<!-- Example: "Revert commit, no data migration needed" -->
 
 ---
 
-## Dependencies
+## Philosophy Checklist
+_Only what CI cannot automatically verify_
 
-### New Dependencies
-```json
-// List new dependencies added
-```
+### Design & Decisions
+- [ ] Design follows project patterns (check similar features)
+- [ ] Trade-offs documented in "Implementation" section
+- [ ] Performance implications considered
 
-### Database Changes
-```sql
--- Schema changes, migrations
-```
+### User Impact
+- [ ] User-facing changes documented
+- [ ] API changes documented (if public API)
+- [ ] Database migrations are reversible
 
-### Environment Variables
-```bash
-# New env vars needed
-```
-
----
-
-## Security Review
-
-- [ ] No secrets or API keys committed
+### Security & Privacy
 - [ ] Input validation on all user inputs
-- [ ] SQL injection prevention
-- [ ] XSS prevention
-- [ ] CSRF protection (if applicable)
+- [ ] No secrets or sensitive data logged
+- [ ] Security review completed (if applicable)
+
+<!--
+💡 CI automatically validates:
+✓ Type checking (no implicit any, proper types)
+✓ Linting (code style, no console.log)
+✓ Tests (coverage > 80%)
+✓ Code patterns (Result<T, E>, Option<T>, no throws)
+✓ Function length (< 50 lines)
+
+Focus this checklist on what requires human judgment.
+-->
 
 ---
 
-## Performance Considerations
+## Additional Context
+_Anything else reviewers should know?_
 
-- [ ] No N+1 queries
-- [ ] Database queries optimized
-- [ ] Caching considered (if applicable)
-- [ ] Memory usage reasonable
-
----
-
-## Documentation
-
-- [ ] README updated (if needed)
-- [ ] API documentation updated (if public API)
-- [ ] CHANGELOG.md updated
-- [ ] Migration guide (if breaking change)
+- Relevant links (design docs, discussions, PRs in other repos)
+- Areas you'd like specific feedback on
+- Potential follow-up work identified
 
 ---
 
-## Deployment Steps
-<!-- List manual steps if needed -->
-
-
-## Rollback Plan
-<!-- How to undo if issues -->
-
-
-## Monitoring
-<!-- What to watch after deploy -->
-
-
----
-
-## Screenshots / Recordings
-
-<!-- For UI changes, attach screenshots or recordings -->
-
-### Before
-<!-- Screenshot before changes -->
-
-### After
-<!-- Screenshot after changes -->
-
----
-
-## Additional Notes
-<!-- Any additional context, decisions, or trade-offs -->
-
+*This template focuses on what CI can't verify: design decisions, user impact, and trade-offs. automated checks handle code quality and patterns.*

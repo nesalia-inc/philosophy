@@ -1,193 +1,134 @@
 ---
 name: Hotfix Pull Request
 about: Template for emergency production fixes
-title: 'HOTFIX: '
+title: 'hotfix: '
 labels: hotfix, urgent
 assignees: ''
 ---
 
-## HOTFIX - [Urgent Issue]
+## 🔥 HOTFIX
+_Urgent production fix_
 
-<!-- One sentence explaining the urgent fix -->
+**Summary**: What's broken and what's fixed (one sentence)
 
-
+**Example**: "Fix payment processing crash caused by null pointer exception"
 
 ---
 
-## Severity & Urgency
+## Incident
 
 ### Severity
-- [ ] **CRITICAL** - Production broken, data loss, security breach
-- [ ] **HIGH** - Major functionality broken
-- [ ] **MEDIUM** - Significant impact on users
-
-### Urgency
-- [ ] **IMMEDIATE** - Deploy now, skip normal process
-- [ ] **URGENT** - Deploy within hours
-- [ ] **HIGH PRIORITY** - Deploy today
-
----
-
-## Issue Summary
-
-### What's Broken?
-<!-- Describe the production issue -->
-
+- [ ] **CRITICAL** - Production down, data loss, security breach
+- [ ] **HIGH** - Major functionality broken, significant user impact
+- [ ] **MEDIUM** - Workaround exists but degraded experience
 
 ### Impact
-- [ ] All users
-- [ ] Specific feature: [Name]
-- [ ] Percentage of users: [%]
+- **Users affected**: <!-- Example: "All users attempting payments (approximately 100/hour)" -->
+- **Started**: <!-- Timestamp when first detected -->
+- **Confirmed**: <!-- Timestamp when confirmed -->
 
-### Started At
-- First detected: [Timestamp]
-- Confirmed: [Timestamp]
+### Root Cause
+_What caused this issue?_
 
----
+<!-- Brief explanation of the root cause -->
 
-## Root Cause
-<!-- What caused the issue -->
 
 
 ---
 
 ## Fix Applied
-<!-- Minimal fix to resolve the issue -->
+
+### The Fix
 ```typescript
-// Show the fix
+// Show the minimal fix
 ```
 
----
+### Why This Fix Works
+<!-- Brief explanation of how the fix resolves the issue -->
 
-## Files Changed
-```bash
-# Only critical files
-```
 
----
-
-## Bypassed Process
-
-### Normal Steps Skipped
-- [ ] Full code review
-- [ ] Full test suite
-- [ ] Staging deployment
-- [ ] Documentation updates
-
-### Critical Checks Done
-- [ ] Local testing passed
-- [ ] Critical smoke tests passed
-- [ ] No new dependencies added
-- [ ] No database migrations
-
----
-
-## Minimal Testing
-
-### Smoke Tests
-```bash
-npm run test:smoke
-```
-
-### Manual Verification
-- [ ] Tested locally
-- [ ] Verified in production (canary)
-- [ ] Checked error logs
-
-### Test Results
-```
-✓ [Test result]
-✓ [Test result]
-```
-
----
-
-## Deployment Steps
-1.
-2.
-3.
-4.
-
----
-
-## Deployment Command
-```bash
-# One-line deploy
-```
 
 ---
 
 ## Verification
-```bash
-# Post-deployment checks
+
+### Testing Done
+- [ ] Local smoke tests passed
+- [ ] Staging/canary verified (if applicable)
+- [ ] Production monitoring confirms fix
+
+### Test Results
+```
+✓ [Smoke test result]
+✓ [Verification step]
 ```
 
+<details>
+<summary>Smoke test commands (click to expand)</summary>
+
+```bash
+# Quick smoke tests
+npm run test:smoke
+
+# Critical path verification
+npm run test:critical
+```
+</details>
+
 ---
 
-## Post-Hotfix Actions
+## Deployment
 
-### Required Follow-up
-- [ ] Create proper PR with full tests
-- [ ] Write post-mortem document
-- [ ] Add regression tests
-- [ ] Update documentation
-- [ ] Schedule retrospective
+### Plan
+1. **Deploy to production**: <!-- When/How -->
+2. **Verify**: <!-- What checks to run -->
+3. **Monitor**: <!-- What to watch for -->
+
+### Rollback Plan
+_If something goes wrong, how do we revert?_
+
+<!-- Example: "Revert commit, no data migration needed" -->
+
+---
+
+## Post-Hotfix Follow-up
+
+### Required Actions
+- [ ] **Create proper PR** with full tests and documentation
+- [ ] **Write post-mortem** - What happened, why, how to prevent
+- [ ] **Add regression tests** to prevent recurrence
+- [ ] **Schedule retrospective** if severe
 
 ### Post-Mortem
-- Post-mortem issue: #[number]
-- Meeting scheduled: [Date/Time]
-
-### Regression Tests
-- [ ] Test case for [specific scenario]
-- [ ] Integration test for [flow]
-- [ ] Monitoring alert for [symptom]
-
----
-
-## Incident Timeline
-
-| Time | Event | Duration |
-|------|-------|----------|
-| [time] | [event] | [duration] |
-| [time] | [event] | [duration] |
-
-**Total Downtime:** [duration]
-
----
-
-## Communication
-
-### Notified
-- [ ] Engineering team
-- [ ] Product team
-- [ ] Support team
-- [ ] Customers (if applicable)
-
-### Customer Communication
-- Status page updated: [Link]
-- Email sent: [Yes/No]
+- Post-mortem issue: #
+- Meeting scheduled: <!-- Date/Time -->
 
 ---
 
 ## References
-- [Alert Link](url)
-- [Error Logs](url)
-- [Monitoring Dashboard](url)
+
+- Alert: <!-- Link to monitoring alert -->
+- Error logs: <!-- Link to logs -->
+- Related issue: #
 
 ---
 
 ## Approval
 
-### Approved By
-- [ ] Engineering Lead: @name
-- [ ] On-call Engineer: @name
-
-### Deployment Approved
-- [ ] Yes - Deploy immediately
-- [ ] Yes - Deploy within [timeframe]
+- [ ] Engineering Lead approval obtained
+- [ ] On-call engineer notified
+- [ ] Deployment approved: **Immediate** / Within <!-- timeframe -->
 
 ---
 
 *Hotfix deployed: [date]*
 *Incident duration: [duration]*
-*Post-mortem scheduled: [date]*
+*Post-mortem due: [date]*
+
+<!--
+🔥 Hotfix process:
+✓ Minimal fix only (address root cause)
+✓ Skip normal process when urgent
+✓ Document everything thoroughly
+✓ Follow up with proper PR + post-mortem
+-->
