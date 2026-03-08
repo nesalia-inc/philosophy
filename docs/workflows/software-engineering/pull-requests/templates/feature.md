@@ -1,11 +1,11 @@
-## 🎯 Summary
+## Summary
 <!-- One sentence explaining what this PR does -->
 
 Example: Add user authentication with JWT tokens
 
 ---
 
-## 📝 Description
+## Description
 
 ### What does this PR do?
 <!-- Explain the changes in simple terms -->
@@ -24,21 +24,21 @@ Closes #[issue-number]
 
 ---
 
-## 🔄 Type of Change
+## Type of Change
 
-- [ ] 🚀 **New feature** (non-breaking change)
-- [ ] 🐛 **Bug fix** (non-breaking change)
-- [ ] 💥 **Breaking change** (fix or feature that breaks existing functionality)
-- [ ] ♻️ **Refactor** (code quality, no behavior change)
-- [ ] 📚 **Documentation** (docs only)
-- [ ] 🎨 **Style** (formatting, no logic change)
-- [ ] ⚡ **Performance** (performance improvement)
-- [ ] ✅ **Test** (adding/updating tests)
-- [ ] 🔧 **Configuration** (config changes)
+- [ ] **New feature** (non-breaking change)
+- [ ] **Bug fix** (non-breaking change)
+- [ ] **Breaking change** (fix or feature that breaks existing functionality)
+- [ ] **Refactor** (code quality, no behavior change)
+- [ ] **Documentation** (docs only)
+- [ ] **Style** (formatting, no logic change)
+- [ ] **Performance** (performance improvement)
+- [ ] **Test** (adding/updating tests)
+- [ ] **Configuration** (config changes)
 
 ---
 
-## 📦 Changes Made
+## Changes Made
 
 ### Files Added
 ```bash
@@ -65,7 +65,7 @@ src/db/schema.ts
 
 ---
 
-## ✅ Test Plan
+## Test Plan
 
 ### Unit Tests
 - [ ] All new functions have unit tests
@@ -100,7 +100,7 @@ Test Files  4 passed (4)
 
 ---
 
-## 🔍 Code Quality Checklist
+## Code Quality Checklist
 
 ### Result<T, E> Pattern
 - [ ] All functions returning success/error use `Result<T, E>`
@@ -132,7 +132,7 @@ Test Files  4 passed (4)
 
 ---
 
-## 🏗️ Architecture & Design
+## Architecture & Design
 
 ### Dependencies
 <!-- List new dependencies added -->
@@ -172,7 +172,7 @@ JWT_EXPIRES_IN=24h
 
 ---
 
-## 🔒 Security Review
+## Security Review
 
 - [ ] No secrets or API keys committed
 - [ ] Input validation on all user inputs
@@ -184,7 +184,7 @@ JWT_EXPIRES_IN=24h
 
 ---
 
-## 📊 Performance Considerations
+## Performance Considerations
 
 - [ ] No N+1 queries
 - [ ] Database queries optimized
@@ -194,7 +194,7 @@ JWT_EXPIRES_IN=24h
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 - [ ] README updated (if needed)
 - [ ] API documentation updated (if public API)
@@ -204,7 +204,7 @@ JWT_EXPIRES_IN=24h
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 ### Deployment Steps
 <!-- List manual steps if needed -->
@@ -227,7 +227,7 @@ npm run migrate:down
 
 ---
 
-## 🔗 Related Resources
+## Related Resources
 
 - [Design Document](link/to/doc)
 - [API Spec](link/to/api)
@@ -235,7 +235,7 @@ npm run migrate:down
 
 ---
 
-## 📸 Screenshots / Recordings
+## Screenshots / Recordings
 
 <!-- For UI changes -->
 <!-- Attach screenshots or Loom recording -->
@@ -248,14 +248,14 @@ npm run migrate:down
 
 ---
 
-## 💬 Additional Notes
+## Additional Notes
 
 <!-- Any additional context, decisions, or trade-offs -->
 
 
 ---
 
-## ✋ Reviewer Focus Areas
+## Reviewer Focus Areas
 
 <!-- Tag specific reviewers for certain aspects -->
 

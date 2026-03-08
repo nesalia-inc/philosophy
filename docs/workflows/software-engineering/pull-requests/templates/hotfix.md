@@ -1,4 +1,4 @@
-## 🔥 HOTFIX - [Urgent Issue]
+## HOTFIX - [Urgent Issue]
 
 <!-- One sentence explaining the urgent fix -->
 
@@ -6,21 +6,21 @@ Example: HOTFIX - Fix payment processing failure
 
 ---
 
-## 🚨 Severity & Urgency
+## Severity & Urgency
 
 ### Severity
-- [ ] 🔴 **CRITICAL** - Production broken, data loss, security breach
-- [ ] 🟠 **HIGH** - Major functionality broken
-- [ ] 🟡 **MEDIUM** - Significant impact on users
+- [ ] **CRITICAL** - Production broken, data loss, security breach
+- [ ] **HIGH** - Major functionality broken
+- [ ] **MEDIUM** - Significant impact on users
 
 ### Urgency
-- [ ] 🔥 **IMMEDIATE** - Deploy now, skip normal process
-- [ ] ⚡ **URGENT** - Deploy within hours
-- [ ] ⏰ **HIGH PRIORITY** - Deploy today
+- [ ] **IMMEDIATE** - Deploy now, skip normal process
+- [ ] **URGENT** - Deploy within hours
+- [ ] **HIGH PRIORITY** - Deploy today
 
 ---
 
-## 🔴 Issue Summary
+## Issue Summary
 
 ### What's Broken?
 <!-- Describe the production issue -->
@@ -40,7 +40,7 @@ Example: HOTFIX - Fix payment processing failure
 
 ---
 
-## 📦 Hotfix Details
+## Hotfix Details
 
 ### Root Cause
 <!-- What caused the issue -->
@@ -60,7 +60,7 @@ src/payment/processor.ts
 
 ---
 
-## ⚡ Bypassed Process
+## Bypassed Process
 
 ### Normal Steps Skipped
 <!-- Acknowledge what was skipped -->
@@ -78,7 +78,7 @@ src/payment/processor.ts
 
 ---
 
-## ✅ Minimal Testing
+## Minimal Testing
 
 ### Smoke Tests
 ```bash
@@ -100,7 +100,7 @@ npm run test:smoke
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 ### Deployment Steps
 1. Merge to main
@@ -124,7 +124,7 @@ curl -f https://api.example.com/api/payments/test
 
 ---
 
-## 🔄 Post-Hotfix Actions
+## Post-Hotfix Actions
 
 ### Required Follow-up
 <!-- What must be done AFTER the hotfix -->
@@ -147,7 +147,7 @@ curl -f https://api.example.com/api/payments/test
 
 ---
 
-## 📊 Incident Timeline
+## Incident Timeline
 
 | Time | Event | Duration |
 |------|-------|----------|
@@ -162,7 +162,7 @@ curl -f https://api.example.com/api/payments/test
 
 ---
 
-## 👥 Communication
+## Communication
 
 ### Notified
 - [ ] Engineering team
@@ -178,7 +178,7 @@ curl -f https://api.example.com/api/payments/test
 
 ---
 
-## 📚 References
+## References
 
 - [Alert Link](url)
 - [Error Logs](url)
@@ -186,7 +186,7 @@ curl -f https://api.example.com/api/payments/test
 
 ---
 
-## ✋ Approval
+## Approval
 
 ### Approved By
 - [ ] Engineering Lead: @name

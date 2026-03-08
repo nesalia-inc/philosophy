@@ -1,11 +1,11 @@
-## ♻️ Refactor Summary
+## Refactor Summary
 <!-- One sentence explaining what is refactored -->
 
 Example: Refactor payment processing to use Result<T, E> pattern
 
 ---
 
-## 🎯 Motivation
+## Motivation
 
 ### Why refactor?
 <!-- Explain the problem with current code -->
@@ -21,10 +21,10 @@ Example: Refactor payment processing to use Result<T, E> pattern
 
 ---
 
-## 🔄 Type of Change
+## Type of Change
 
-- [ ] ♻️ **Refactor** (no behavior change)
-- [ ] 🏗️ **Architecture** (structural change)
+- [ ] **Refactor** (no behavior change)
+- [ ] **Architecture** (structural change)
 
 ### Behavior Contract
 - [ ] **No behavior changes** - Output is identical
@@ -33,7 +33,7 @@ Example: Refactor payment processing to use Result<T, E> pattern
 
 ---
 
-## 📦 Changes Made
+## Changes Made
 
 ### Refactoring Approach
 <!-- Explain the refactoring technique used -->
@@ -45,7 +45,7 @@ Example: Refactor payment processing to use Result<T, E> pattern
 
 #### Before (Code with Issues)
 ```typescript
-// ❌ Uses exceptions
+// Uses exceptions
 async function processPayment(
   amount: number,
   method: PaymentMethod
@@ -72,7 +72,7 @@ try {
 
 #### After (Refactored Code)
 ```typescript
-// ✅ Explicit errors
+// Explicit errors
 type PaymentError =
   | { type: 'invalid_amount'; amount: number }
   | { type: 'payment_expired'; methodId: string }
@@ -128,7 +128,7 @@ tests/payment/processor.test.ts  # Updated tests
 
 ---
 
-## ✅ Test Strategy
+## Test Strategy
 
 ### Refactoring Tests
 - [ ] All existing tests still pass
@@ -154,7 +154,7 @@ npm run test:regression
 
 ---
 
-## 📊 Metrics
+## Metrics
 
 ### Code Quality Improvements
 <!-- Measurable improvements -->
@@ -171,7 +171,7 @@ npm run test:regression
 
 ---
 
-## 🔄 Migration Path
+## Migration Path
 
 ### Backwards Compatibility
 - [ ] Fully compatible (no changes needed)
@@ -193,7 +193,7 @@ if (!result.ok) {
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 - [ ] README updated with new patterns
 - [ ] Migration guide provided (if needed)
@@ -202,7 +202,7 @@ if (!result.ok) {
 
 ---
 
-## 🤔 Open Questions
+## Open Questions
 
 <!-- Design decisions that need discussion -->
 - [ ] Should we add a `PaymentResult` type alias?

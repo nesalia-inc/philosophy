@@ -1,4 +1,4 @@
-## 💥 BREAKING CHANGE
+## BREAKING CHANGE
 
 <!-- One sentence explaining the breaking change -->
 
@@ -6,12 +6,12 @@ Example: BREAKING CHANGE - Replace callback-based API with Promise-based API
 
 ---
 
-## ⚠️ Breaking Change Notice
+## Breaking Change Notice
 
 ### Migration Required
-- [ ] 🔴 **Breaking change** - Consumers must update their code
-- [ ] 🟡 **Deprecation** - Old API still works but will be removed
-- [ ] 🟢 **Addition only** - No breaking changes
+- [ ] **Breaking change** - Consumers must update their code
+- [ ] **Deprecation** - Old API still works but will be removed
+- [ ] **Addition only** - No breaking changes
 
 ### Release Version
 - Target release: v2.0.0
@@ -19,7 +19,7 @@ Example: BREAKING CHANGE - Replace callback-based API with Promise-based API
 
 ---
 
-## 📦 What Changed?
+## What Changed?
 
 ### API Changes
 <!-- List the breaking changes -->
@@ -29,7 +29,7 @@ Example: BREAKING CHANGE - Replace callback-based API with Promise-based API
 
 ### Before (Old API)
 ```typescript
-// ❌ OLD API (removed)
+// OLD API (removed)
 import { authenticate } from 'my-lib'
 
 authenticate(user, password, (err, user) => {
@@ -43,7 +43,7 @@ authenticate(user, password, (err, user) => {
 
 ### After (New API)
 ```typescript
-// ✅ NEW API
+// NEW API
 import { authenticate } from 'my-lib'
 
 const result = await authenticate(user, password)
@@ -57,7 +57,7 @@ if (!result.ok) {
 
 ---
 
-## 🔄 Migration Guide
+## Migration Guide
 
 ### Step-by-Step Migration
 
@@ -121,12 +121,12 @@ npm run typecheck  # Check for errors
 
 ---
 
-## 📊 Impact Assessment
+## Impact Assessment
 
 ### Scope of Change
-- [ ] 🔴 **Wide impact** - Most consumers affected
-- [ ] 🟡 **Medium impact** - Some consumers affected
-- [ ] 🟢 **Narrow impact** - Few consumers affected
+- [ ] **Wide impact** - Most consumers affected
+- [ ] **Medium impact** - Some consumers affected
+- [ ] **Narrow impact** - Few consumers affected
 
 ### Estimated Migration Effort
 <!-- Time for consumers to migrate -->
@@ -142,7 +142,7 @@ npm run typecheck  # Check for errors
 
 ---
 
-## ✅ Testing
+## Testing
 
 ### Backwards Compatibility Tests
 - [ ] Old API no longer works (as expected)
@@ -160,7 +160,7 @@ npm run test:migration
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 ### Documentation Updates
 - [ ] README updated with new API
@@ -176,7 +176,7 @@ npm run test:migration
 
 ---
 
-## 📅 Deprecation Timeline
+## Deprecation Timeline
 
 | Date | Milestone |
 |------|-----------|
@@ -191,12 +191,12 @@ npm run test:migration
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 ### Deployment Strategy
-- [ ] 🔄 Gradual rollout (canary)
-- [ ] 📊 Feature flags for gradual migration
-- [ ] 🎯 Big bang release
+- [ ] **Gradual rollout** (canary)
+- [ ] **Feature flags** for gradual migration
+- [ ] **Big bang** release
 
 ### Rollback Plan
 ```bash
@@ -210,7 +210,7 @@ npm install my-lib@legacy
 
 ---
 
-## 🤔 Why This Change?
+## Why This Change?
 
 ### Problems with Old API
 <!-- Why we're breaking things -->
@@ -229,7 +229,7 @@ npm install my-lib@legacy
 
 ---
 
-## 💬 Feedback & Questions
+## Feedback & Questions
 
 ### Get Help
 - [GitHub Discussions](link)
@@ -243,7 +243,7 @@ npm install my-lib@legacy
 
 ---
 
-## ✋ Approval
+## Approval
 
 ### Required Approvals
 - [ ] Tech Lead: Breaking changes approved

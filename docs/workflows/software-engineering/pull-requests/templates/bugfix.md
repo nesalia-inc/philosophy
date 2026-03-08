@@ -1,11 +1,11 @@
-## 🐛 Bug Fix Summary
+## Bug Fix Summary
 <!-- One sentence explaining which bug is fixed -->
 
 Example: Fix infinite loop in data processing pipeline
 
 ---
 
-## 🔴 Issue
+## Issue
 Fixes #[issue-number]
 
 ### Bug Description
@@ -26,15 +26,15 @@ Fixes #[issue-number]
 
 ---
 
-## 🔄 Type of Change
+## Type of Change
 
-- [ ] 🐛 **Bug fix** (non-breaking)
-- [ ] 💥 **Breaking change** (fix that changes behavior)
-- [ ] 🔥 **Hotfix** (urgent production fix)
+- [ ] **Bug fix** (non-breaking)
+- [ ] **Breaking change** (fix that changes behavior)
+- [ ] **Hotfix** (urgent production fix)
 
 ---
 
-## 📦 Changes Made
+## Changes Made
 
 ### What was fixed?
 <!-- Explain the fix -->
@@ -53,7 +53,7 @@ tests/data/pipeline.test.ts
 
 ---
 
-## ✅ Test Plan
+## Test Plan
 
 ### Reproduction Steps
 <!-- Steps to reproduce the original bug -->
@@ -79,7 +79,7 @@ it('handles large datasets without infinite loop', () => {
 
 ---
 
-## 🔍 Root Cause Analysis
+## Root Cause Analysis
 
 ### Before (Broken Code)
 ```typescript
@@ -109,7 +109,7 @@ const processData = (items: Item[]): Result<void, ProcessError> => {
 
 ---
 
-## 🛡️ Regression Prevention
+## Regression Prevention
 
 ### Tests Added
 <!-- New tests to prevent this bug from coming back -->
@@ -123,7 +123,7 @@ const processData = (items: Item[]): Result<void, ProcessError> => {
 
 ---
 
-## 📊 Impact Assessment
+## Impact Assessment
 
 ### Users Affected
 <!-- Who was impacted by this bug -->
@@ -131,19 +131,19 @@ const processData = (items: Item[]): Result<void, ProcessError> => {
 - Impact: ~50 users/day
 
 ### Severity
-- [ ] 🔴 Critical (blocks functionality)
-- [ ] 🟠 High (major impact)
-- [ ] 🟡 Medium (minor impact)
-- [ ] 🟢 Low (cosmetic)
+- [ ] **Critical** (blocks functionality)
+- [ ] **High** (major impact)
+- [ ] **Medium** (minor impact)
+- [ ] **Low** (cosmetic)
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 ### Urgency
-- [ ] 🔥 Deploy immediately
-- [ ] ⏰ Deploy in next release
-- [ ] 📅 Deploy in scheduled window
+- [ ] Deploy immediately
+- [ ] Deploy in next release
+- [ ] Deploy in scheduled window
 
 ### Rollback Plan
 ```bash

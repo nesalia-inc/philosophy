@@ -1,4 +1,4 @@
-## 🔐 Security Fix
+## Security Fix
 
 <!-- One sentence explaining the security issue -->
 
@@ -6,12 +6,12 @@ Example: Fix SQL injection vulnerability in user search
 
 ---
 
-## 🚨 Severity
+## Severity
 
-- [ ] 🔴 **Critical** (immediate threat)
-- [ ] 🟠 **High** (significant risk)
-- [ ] 🟡 **Medium** (moderate risk)
-- [ ] 🟢 **Low** (minor risk)
+- [ ] **Critical** (immediate threat)
+- [ ] **High** (significant risk)
+- [ ] **Medium** (moderate risk)
+- [ ] **Low** (minor risk)
 
 ### CVE / Security Bulletin
 - CVE: CVE-2025-XXXXX
@@ -19,17 +19,17 @@ Example: Fix SQL injection vulnerability in user search
 
 ---
 
-## 🔴 Vulnerability Details
+## Vulnerability Details
 
 ### Vulnerability Type
-- [ ] 💉 SQL Injection
-- [ ] 🔥 XSS (Cross-Site Scripting)
-- [ ] 🎭 CSRF (Cross-Site Request Forgery)
-- [ ] 🔑 Authentication bypass
-- [ ] 📤 Data leak
-- [ ] ⚡ DoS vulnerability
-- [ ] 🔓 Insecure configuration
-- [ ] 📦 Dependency vulnerability
+- [ ] **SQL Injection**
+- [ ] **XSS (Cross-Site Scripting)**
+- [ ] **CSRF (Cross-Site Request Forgery)**
+- [ ] **Authentication bypass**
+- [ ] **Data leak**
+- [ ] **DoS vulnerability**
+- [ ] **Insecure configuration**
+- [ ] **Dependency vulnerability**
 
 ### Description
 <!-- Explain the vulnerability -->
@@ -49,12 +49,12 @@ Example: Fix SQL injection vulnerability in user search
 
 ---
 
-## 📦 Security Fix
+## Security Fix
 
 ### Root Cause
 <!-- What code was vulnerable -->
 ```typescript
-// ❌ VULNERABLE CODE
+// VULNERABLE CODE
 app.get('/api/users/search', (req, res) => {
   const query = req.query.q
   // Direct interpolation - SQL injection!
@@ -68,7 +68,7 @@ app.get('/api/users/search', (req, res) => {
 ### Fix Implementation
 <!-- How it was fixed -->
 ```typescript
-// ✅ SECURE CODE
+// SECURE CODE
 app.get('/api/users/search', async (req, res): Promise<Result<void, ApiError>> => {
   const query = req.query.q as string
 
@@ -103,7 +103,7 @@ tests/api/users.test.ts    # Security tests added
 
 ---
 
-## ✅ Security Testing
+## Security Testing
 
 ### Vulnerability Tests
 - [ ] SQL injection test cases added
@@ -149,7 +149,7 @@ describe('User Search Security', () => {
 
 ---
 
-## 🛡️ Prevention
+## Prevention
 
 ### Code Review Practices
 <!-- How to prevent this in the future -->
@@ -173,12 +173,12 @@ describe('User Search Security', () => {
 
 ---
 
-## 📢 Disclosure
+## Disclosure
 
 ### Disclosure Policy
-- [ ] 👥 Public disclosure
-- [ ] 🔒 Private disclosure
-- [ ] 🤝 Coordinated disclosure
+- [ ] **Public disclosure**
+- [ ] **Private disclosure**
+- [ ] **Coordinated disclosure**
 
 ### Affected Parties
 <!-- Who needs to know -->
@@ -195,12 +195,12 @@ describe('User Search Security', () => {
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 ### Deployment Strategy
-- [ ] 🔥 Emergency deployment
-- [ ] 📅 Scheduled maintenance
-- [ ] 🔄 Rolling deployment
+- [ ] **Emergency deployment**
+- [ ] **Scheduled maintenance**
+- [ ] **Rolling deployment**
 
 ### Deployment Steps
 1. Deploy fix to production
@@ -217,7 +217,7 @@ curl https://api.example.com/api/users/search?q="'; DROP TABLE users; --"
 
 ---
 
-## 📊 Impact Assessment
+## Impact Assessment
 
 ### Users Affected
 <!-- Who was vulnerable -->
@@ -232,7 +232,7 @@ curl https://api.example.com/api/users/search?q="'; DROP TABLE users; --"
 
 ---
 
-## 📚 Post-Mortem
+## Post-Mortem
 
 ### Lessons Learned
 <!-- What will change -->
