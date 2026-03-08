@@ -1,8 +1,15 @@
-## Performance Optimization
+---
+name: Performance Optimization Pull Request
+about: Template for performance improvements
+title: 'perf: '
+labels: performance
+assignees: ''
+---
 
 <!-- One sentence explaining what is optimized -->
+## Performance Optimization
 
-Example: Optimize database queries to reduce API latency by 80%
+
 
 ---
 
@@ -10,35 +17,29 @@ Example: Optimize database queries to reduce API latency by 80%
 
 ### Baseline (Before)
 <!-- Current performance metrics -->
-- API response time: 1,200ms
-- Database query time: 950ms
-- Memory usage: 512MB
-- CPU usage: 65%
+- API response time: [ms]
+- Database query time: [ms]
+- Memory usage: [MB]
+- CPU usage: [%]
 
 ### Target (After)
 <!-- Expected improvements -->
-- API response time: < 200ms
-- Database query time: < 100ms
-- Memory usage: < 256MB
-- CPU usage: < 40%
+- API response time: < [ms]
+- Database query time: < [ms]
+- Memory usage: < [MB]
+- CPU usage: < [%]
 
 ---
 
-## Optimization Changes
-
-### What was optimized?
+## What was optimized?
 <!-- List the optimizations -->
-- Added database indexes on frequently queried columns
-- Implemented query result caching
-- Optimized N+1 queries with eager loading
-- Added response compression
 
-### Files Changed
+
+---
+
+## Files Changed
 ```bash
-src/api/users/index.ts       # Added caching
-src/db/queries/users.ts      # Optimized queries
-src/db/migrations/002_add_indexes.sql
-src/lib/cache.ts            # New caching layer
+# List files
 ```
 
 ---
@@ -47,57 +48,12 @@ src/lib/cache.ts            # New caching layer
 
 ### Before (Slow)
 ```typescript
-// N+1 query problem
-async function getUsersWithPosts(): Promise<User[]> {
-  const users = await db.query('SELECT * FROM users')
-
-  // N+1: One query per user!
-  for (const user of users) {
-    user.posts = await db.query(
-      'SELECT * FROM posts WHERE user_id = ?',
-      [user.id]
-    )
-  }
-
-  return users
-}
-// Time: 1,200ms for 100 users
+// Show slow code
 ```
 
 ### After (Optimized)
 ```typescript
-// Single query with JOIN
-async function getUsersWithPosts(): Promise<Result<User[], DbError>> {
-  const result = await db.query<Result<User[], DbError>>(`
-    SELECT
-      users.*,
-      JSON_ARRAYAGG(
-        JSON_OBJECT(
-          'id', posts.id,
-          'title', posts.title
-        )
-      ) as posts
-    FROM users
-    LEFT JOIN posts ON posts.user_id = users.id
-    GROUP BY users.id
-  `)
-
-  return result
-}
-// Time: 95ms for 100 users (12.5x faster)
-```
-
-### Database Indexes Added
-```sql
--- Speed up user lookups
-CREATE INDEX idx_users_email ON users(email);
-
--- Speed up post queries
-CREATE INDEX idx_posts_user_id ON posts(user_id);
-
--- Covering index for common queries
-CREATE INDEX idx_users_status_created
-  ON users(status, created_at);
+// Show optimized code
 ```
 
 ---
@@ -106,50 +62,34 @@ CREATE INDEX idx_users_status_created
 
 ### Methodology
 <!-- How performance was measured -->
-- Used Apache Bench for load testing
-- Measured with 1000 concurrent requests
-- Ran tests on identical hardware
-- Tested with production-like dataset
+
 
 ### Benchmark Results
 
 #### API Response Time
 ```
-Before: 1,247ms (p95), 1,890ms (p99)
-After:   187ms (p95),  245ms (p99)
-Improvement: 85% faster
+Before: [time]
+After:  [time]
+Improvement: [X]% faster
 ```
 
 #### Database Queries
 ```
-Before: 157 queries per request (N+1 problem)
-After:    3 queries per request
-Reduction: 98% fewer queries
+Before: [queries] per request
+After:  [queries] per request
+Reduction: [X]% fewer queries
 ```
 
 #### Memory Usage
 ```
-Before: 512MB baseline, 1.2GB peak
-After:  256MB baseline, 380MB peak
-Reduction: 50% less memory
-```
-
-#### Throughput
-```
-Before: 45 requests/second
-After:  890 requests/second
-Improvement: 19.7x more throughput
+Before: [memory]
+After:  [memory]
+Reduction: [X]% less memory
 ```
 
 ### Load Test Commands
 ```bash
-# Benchmark endpoint
-ab -n 10000 -c 100 https://api.example.com/users
-
-# With authentication
-ab -n 10000 -c 100 \
-  -H "Authorization: Bearer $TOKEN" \
-  https://api.example.com/users
+# Commands used
 ```
 
 ---
@@ -160,20 +100,11 @@ ab -n 10000 -c 100 \
 - [ ] Load tests pass
 - [ ] No regressions in other endpoints
 - [ ] Memory leaks tested
-- [ ] Cache invalidation verified
 
 ### Correctness Tests
 - [ ] All existing tests still pass
 - [ ] Output is identical to before
 - [ ] Edge cases work correctly
-- [ ] Cache coherence verified
-
-### Test Results
-```bash
-npm run test:performance
-npm run test:load
-npm run test:memory
-```
 
 ---
 
@@ -185,18 +116,14 @@ npm run test:memory
 - Database query times
 - Cache hit rates
 - Memory usage
-- CPU usage
 
 ### Alerts
 <!-- When to alert -->
-- Response time > 500ms
-- Cache hit rate < 80%
-- Error rate > 1%
+
 
 ### Dashboards
 <!-- Where to monitor -->
-- Grafana dashboard: [Link]
-- Datadog dashboard: [Link]
+- [Link to dashboard]
 
 ---
 
@@ -210,19 +137,6 @@ npm run test:memory
 ### Rollback Plan
 ```bash
 # If issues detected
-kubectl rollback deployment/api
-# Or
-git revert <commit-hash>
-```
-
-### Verification
-```bash
-# Smoke test
-curl https://api.example.com/health
-curl https://api.example.com/users?limit=10
-
-# Load test
-npm run test:load:production
 ```
 
 ---
@@ -230,34 +144,22 @@ npm run test:load:production
 ## Trade-offs
 
 ### What We Gained
-- 85% faster response times
-- 98% fewer database queries
-- 50% less memory usage
-- 20x higher throughput
+
 
 ### What We Lost
-- Increased code complexity
-- Additional cache invalidation logic
-- More database indexes (slower writes)
-- Increased memory for cache
+
 
 ### Mitigation
-- Added extensive documentation
-- Simplified cache API
-- Monitor write performance
-- Set cache size limits
+
 
 ---
 
 ## Documentation
-
 - [ ] Performance guide updated
 - [ ] Caching strategy documented
-- [ ] Runbook for cache issues
-- [ ] Architecture decisions record (ADR)
+- [ ] Runbook created
 
 ---
 
-*Performance Gain: 85% faster, 20x throughput*
-*Infrastructure Impact: +128MB for cache*
-*Production Estimate: Save $450/month on servers*
+*Performance Gain: [X]% faster*
+*Infrastructure Impact: [cost]*

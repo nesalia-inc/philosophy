@@ -1,8 +1,16 @@
+---
+name: Breaking Change Pull Request
+about: Template for breaking API changes
+title: 'BREAKING CHANGE: '
+labels: breaking-change
+assignees: ''
+---
+
 ## BREAKING CHANGE
 
 <!-- One sentence explaining the breaking change -->
 
-Example: BREAKING CHANGE - Replace callback-based API with Promise-based API
+
 
 ---
 
@@ -14,45 +22,27 @@ Example: BREAKING CHANGE - Replace callback-based API with Promise-based API
 - [ ] **Addition only** - No breaking changes
 
 ### Release Version
-- Target release: v2.0.0
-- Breaking since: v1.0.0
+- Target release: vX.X.X
+- Breaking since: vX.X.X
 
 ---
 
 ## What Changed?
-
-### API Changes
 <!-- List the breaking changes -->
-- `authenticate()` now returns `Promise<Result<User, AuthError>>` instead of using callbacks
-- `User.id` is now `UUID` instead of `number`
-- Removed `deprecatedMethod()` - use `newMethod()` instead
 
-### Before (Old API)
+
+---
+
+## Before (Old API)
 ```typescript
 // OLD API (removed)
-import { authenticate } from 'my-lib'
-
-authenticate(user, password, (err, user) => {
-  if (err) {
-    console.error('Authentication failed', err)
-  } else {
-    console.log('Authenticated', user)
-  }
-})
 ```
 
-### After (New API)
+---
+
+## After (New API)
 ```typescript
 // NEW API
-import { authenticate } from 'my-lib'
-
-const result = await authenticate(user, password)
-
-if (!result.ok) {
-  console.error('Authentication failed', result.error)
-} else {
-  console.log('Authenticated', result.value)
-}
 ```
 
 ---
@@ -61,62 +51,22 @@ if (!result.ok) {
 
 ### Step-by-Step Migration
 
-#### 1. Update Imports
-```bash
-# No import changes needed
-# Same package, new API
-```
-
-#### 2. Replace Callbacks with Async/Await
+#### 1. [Step title]
 ```typescript
-// Before
-function processData(data, callback) {
-  authenticate(data.user, data.pass, (err, user) => {
-    if (err) return callback(err)
-    callback(null, user)
-  })
-}
-
-// After
-async function processData(data): Promise<Result<User, ProcessError>> {
-  const authResult = await authenticate(data.user, data.pass)
-
-  if (!authResult.ok) {
-    return Result.err({
-      type: 'auth_failed',
-      cause: authResult.error
-    })
-  }
-
-  return Result.ok(authResult.value)
-}
+// Show migration example
 ```
 
-#### 3. Update Type References
+#### 2. [Step title]
 ```typescript
-// Before
-interface User {
-  id: number
-  name: string
-}
-
-// After
-interface User {
-  id: UUID  // Changed from number
-  name: string
-}
+// Show migration example
 ```
+
+---
 
 ### Migration Script
 <!-- Automated migration if available -->
 ```bash
 # Run automated codemod
-npx my-lib-codemod@2 migrate ./src
-
-# Or manual migration
-npm install my-lib@2
-# Update your code
-npm run typecheck  # Check for errors
 ```
 
 ---
@@ -130,15 +80,15 @@ npm run typecheck  # Check for errors
 
 ### Estimated Migration Effort
 <!-- Time for consumers to migrate -->
-- Small projects: ~1 hour
-- Medium projects: ~4 hours
-- Large projects: ~1-2 days
+- Small projects: ~[time]
+- Medium projects: ~[time]
+- Large projects: ~[time]
 
 ### Affected Consumers
 <!-- Who needs to migrate -->
-- Estimated projects affected: ~150
-- Internal projects: 12
-- External projects: ~138
+- Estimated projects affected: ~[number]
+- Internal projects: [number]
+- External projects: ~[number]
 
 ---
 
@@ -151,28 +101,25 @@ npm run typecheck  # Check for errors
 
 ### Test Coverage
 ```bash
-# Test new API
 npm run test
-
-# Test migration examples
 npm run test:migration
 ```
 
 ---
 
-## Documentation
-
-### Documentation Updates
+## Documentation Updates
 - [ ] README updated with new API
 - [ ] Migration guide published
 - [ ] Changelog updated
 - [ ] Code examples updated
 - [ ] Breaking changes documented
 
-### Migration Resources
-- [Migration Guide](./docs/migration-v2.md)
-- [API Reference](./docs/api-v2.md)
-- [Examples](./examples/v2/)
+---
+
+## Migration Resources
+- [Migration Guide](./docs/migration-vX.md)
+- [API Reference](./docs/api-vX.md)
+- [Examples](./examples/vX/)
 
 ---
 
@@ -180,14 +127,14 @@ npm run test:migration
 
 | Date | Milestone |
 |------|-----------|
-| 2025-03-08 | v2.0.0 released with breaking changes |
-| 2025-04-08 | v1.x deprecated (1 month notice) |
-| 2025-06-08 | v1.x end of life (3 months notice) |
-| 2025-09-08 | v1.x no longer supported |
+| [date] | vX.X.X released with breaking changes |
+| [date] | v[old].x deprecated ([time] notice) |
+| [date] | v[old].x end of life ([time] notice) |
+| [date] | v[old].x no longer supported |
 
 ### Support Policy
-- **v1.x**: Security patches only until 2025-06-08
-- **v2.x**: Full support until 2026-03-08
+- **v[old].x**: Security patches only until [date]
+- **v[new].x**: Full support until [date]
 
 ---
 
@@ -200,12 +147,7 @@ npm run test:migration
 
 ### Rollback Plan
 ```bash
-# If issues arise, rollback to v1.x
-git checkout v1.10.0
-npm publish --tag legacy
-
-# Update consumers to use legacy tag
-npm install my-lib@legacy
+# If issues arise, rollback to v[old].x
 ```
 
 ---
@@ -214,18 +156,11 @@ npm install my-lib@legacy
 
 ### Problems with Old API
 <!-- Why we're breaking things -->
-- Callbacks make error handling difficult
-- No type safety on errors
-- Hard to test
-- Doesn't align with modern async patterns
+
 
 ### Benefits of New API
 <!-- What consumers gain -->
-- Better error handling with Result<T, E>
-- Type-safe errors
-- Easier testing
-- Modern async/await syntax
-- Better IDE support
+
 
 ---
 
@@ -238,25 +173,24 @@ npm install my-lib@legacy
 
 ### Known Issues
 <!-- Document any migration issues -->
-- Issue #123: Some consumers struggle with async migration
-- Issue #124: TypeScript version requirements
+- Issue #[number]: [description]
 
 ---
 
-## Approval
-
-### Required Approvals
+## Required Approvals
 - [ ] Tech Lead: Breaking changes approved
 - [ ] Product: Business impact reviewed
 - [ ] Documentation: Migration guide complete
 
-### Risk Assessment
+---
+
+## Risk Assessment
 - Risk level: [Low/Medium/High]
 - Mitigation: [What we're doing to reduce risk]
 
 ---
 
-*Breaking Change Version: 2.0.0*
-*Migration Deadline: 2025-06-08*
-*Support Ends: 2025-09-08*
-*Affected Consumers: ~150 projects*
+*Breaking Change Version: X.X.X*
+*Migration Deadline: [date]*
+*Support Ends: [date]*
+*Affected Consumers: ~[number] projects*
